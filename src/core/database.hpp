@@ -6,6 +6,8 @@
 #include <libpq-fe.h>
 #include <stdexcept>
 #include <iomanip>
+#include <exception>
+#include <spdlog/spdlog.h>
 
 class PostgreSQLConnector {
 private:

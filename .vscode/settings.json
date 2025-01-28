@@ -80,6 +80,10 @@
     "variant": "cpp",
     "forward_list": "cpp",
     "valarray": "cpp",
-    "*.ipp": "cpp"
+    "*.ipp": "cpp",
+    "format": "cpp",
+    "shared_mutex": "cpp",
+    "span": "cpp",
+    "ranges": "cpp"
   }
 }

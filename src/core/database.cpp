@@ -3,14 +3,18 @@
 PGconn* PostgreSQLConnector::conn_ = nullptr;
 
 void PostgreSQLConnector::connect() {
-  std::string url {"postgres://postgres:zJ6anW4nkL6QyuOQ0jx1YbyTbAI1Aj@127.0.0.1:5432/dailyhub"};
-  PostgreSQLConnector::conn_ = PQconnectdb(url.c_str());
+  std::string url{std::getenv("URL_POSTGRES")};
 
-  if (PQstatus(PostgreSQLConnector::conn_) != CONNECTION_OK) {
-    std::string error_msg = "Connection Error: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_));
-    PQfinish(PostgreSQLConnector::conn_);
-    conn_ = nullptr;
-    throw std::runtime_error(error_msg);
+  try {
+    PostgreSQLConnector::conn_ = PQconnectdb(url.c_str());
+    if (PQstatus(PostgreSQLConnector::conn_) != CONNECTION_OK) {
+      std::string error_msg = "Connection Error: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_));
+      PQfinish(PostgreSQLConnector::conn_);
+      conn_ = nullptr;
+      throw std::runtime_error(error_msg);
+    }
+  } catch(std::exception& e) {
+    spdlog::error("Error connecting to PostgreSQL: {}", e.what());
   }
 }
 
@@ -27,17 +31,22 @@ bool PostgreSQLConnector::isConnected() {
 }
 
 PGresult* PostgreSQLConnector::executeQuery(const std::string& query) {
-  if (!isConnected()) {
-    throw std::runtime_error("Connection not available, unable to execute query");
-  }
+  try {
+    if (!isConnected()) {
+      throw std::runtime_error("Connection not available, unable to execute query");
+    }
 
-  PGresult* result = PQexec(PostgreSQLConnector::conn_, query.c_str());
-  if (PQresultStatus(result) != PGRES_TUPLES_OK && PQresultStatus(result) != PGRES_COMMAND_OK) {
-    std::string error_msg = "Query Error: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_));
-    PQclear(result);
-    throw std::runtime_error(error_msg);
+    PGresult* result = PQexec(PostgreSQLConnector::conn_, query.c_str());
+    if (PQresultStatus(result) != PGRES_TUPLES_OK && PQresultStatus(result) != PGRES_COMMAND_OK) {
+      std::string error_msg = "Query Error: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_));
+      PQclear(result);
+      throw std::runtime_error(error_msg);
+    }
+    return result;
+  } catch(std::exception& e) {
+    spdlog::error("Error executeQuery PostgreSQL: {}", e.what());
+    return nullptr;
   }
-  return result;
 }
 
 void PostgreSQLConnector::clearResult(PGresult* result) {
