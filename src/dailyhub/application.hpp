@@ -2,7 +2,6 @@
 #define APPLICATION_HPP
 
 #include "../core/database.hpp"
-#include "../core/rest_client.hpp"
 #include "../core/server.hpp"
 #include "../core/utility.hpp"
 
@@ -12,6 +11,7 @@
 #include <thread>
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
+#include <httplib.h>
 
 class DailyHub {
 public: 
