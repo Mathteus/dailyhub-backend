@@ -1,5 +1,8 @@
 {
   "files.associations": {
+    "*.sqlbook": "sql",
+    "*.ndjson": "jsonl",
+    "*.dbclient-js": "javascript",
     ".env.*": "dotenv",
     ".prettierrc": "json",
     "*.css": "css",
@@ -84,6 +87,8 @@
     "format": "cpp",
     "shared_mutex": "cpp",
     "span": "cpp",
-    "ranges": "cpp"
+    "ranges": "cpp",
+    "unordered_set": "cpp",
+    "regex": "cpp"
   }
 }

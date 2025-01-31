@@ -1,3 +1,3 @@
-/media/henrique/A/dailyhub-backend/build/CMakeFiles/DailyHub_Server.dir
+/media/henrique/A/dailyhub-backend/build/CMakeFiles/Dailyhub_Server.dir
 /media/henrique/A/dailyhub-backend/build/CMakeFiles/edit_cache.dir
 /media/henrique/A/dailyhub-backend/build/CMakeFiles/rebuild_cache.dir

@@ -4,8 +4,8 @@
 crow::SimpleApp Servidor::app = NULL;
 std::thread Servidor::server_worker;
 
-bool verifyKeyApi(std::string apikey) {
-  return std::string(std::getenv("X_API_KEY")) == apikey;
+bool verifyKeyApi(const crow::request& apikey) {
+  return std::string(std::getenv("X_API_KEY")) == apikey.get_header_value("x-api-key");
 }
 
 crow::response isonline(const crow::request& req) {
@@ -13,22 +13,23 @@ crow::response isonline(const crow::request& req) {
 }
 
 crow::response loginUser(const crow::request& req) {
-  if (verifyKeyApi(req.get_header_value("x-api-key"))) {
-    return crow::response(200, "Login");
+  if (verifyKeyApi(req)) {
+    return crow::response(200, "Login My APP");
   }
   return crow::response(401);
 }
 
 crow::response registerUser(const crow::request& req) {
-  if (verifyKeyApi(req.get_header_value("x-api-key"))) {
-    return crow::response(200, "Register");
+  if (verifyKeyApi(req)) {
+    
+    return crow::response(200, "Register My APP");
   }
 
   return crow::response(401);
 }
 
 crow::response sendEmail(const crow::request& req) {
-  if (verifyKeyApi(req.get_header_value("x-api-key"))) {
+  if (verifyKeyApi(req)) {
     return crow::response(200, "Register");
   }
 

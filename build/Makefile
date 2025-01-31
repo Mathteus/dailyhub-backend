@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named DailyHub_Server
+# Target rules for targets named Dailyhub_Server
 
 # Build rule for target.
-DailyHub_Server: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 DailyHub_Server
-.PHONY : DailyHub_Server
+Dailyhub_Server: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Dailyhub_Server
+.PHONY : Dailyhub_Server
 
 # fast build rule for target.
-DailyHub_Server/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/build
-.PHONY : DailyHub_Server/fast
+Dailyhub_Server/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/build
+.PHONY : Dailyhub_Server/fast
 
 src/core/database.o: src/core/database.cpp.o
 .PHONY : src/core/database.o
 
 # target to build an object file
 src/core/database.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/database.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o
 .PHONY : src/core/database.cpp.o
 
 src/core/database.i: src/core/database.cpp.i
@@ -142,7 +142,7 @@ src/core/database.i: src/core/database.cpp.i
 
 # target to preprocess a source file
 src/core/database.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/database.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.i
 .PHONY : src/core/database.cpp.i
 
 src/core/database.s: src/core/database.cpp.s
@@ -150,39 +150,39 @@ src/core/database.s: src/core/database.cpp.s
 
 # target to generate assembly for a file
 src/core/database.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/database.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.s
 .PHONY : src/core/database.cpp.s
 
-src/core/rest_client.o: src/core/rest_client.cpp.o
-.PHONY : src/core/rest_client.o
+src/core/hash-password.o: src/core/hash-password.cpp.o
+.PHONY : src/core/hash-password.o
 
 # target to build an object file
-src/core/rest_client.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/rest_client.cpp.o
-.PHONY : src/core/rest_client.cpp.o
+src/core/hash-password.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o
+.PHONY : src/core/hash-password.cpp.o
 
-src/core/rest_client.i: src/core/rest_client.cpp.i
-.PHONY : src/core/rest_client.i
+src/core/hash-password.i: src/core/hash-password.cpp.i
+.PHONY : src/core/hash-password.i
 
 # target to preprocess a source file
-src/core/rest_client.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/rest_client.cpp.i
-.PHONY : src/core/rest_client.cpp.i
+src/core/hash-password.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.i
+.PHONY : src/core/hash-password.cpp.i
 
-src/core/rest_client.s: src/core/rest_client.cpp.s
-.PHONY : src/core/rest_client.s
+src/core/hash-password.s: src/core/hash-password.cpp.s
+.PHONY : src/core/hash-password.s
 
 # target to generate assembly for a file
-src/core/rest_client.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/rest_client.cpp.s
-.PHONY : src/core/rest_client.cpp.s
+src/core/hash-password.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.s
+.PHONY : src/core/hash-password.cpp.s
 
 src/core/server.o: src/core/server.cpp.o
 .PHONY : src/core/server.o
 
 # target to build an object file
 src/core/server.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/server.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o
 .PHONY : src/core/server.cpp.o
 
 src/core/server.i: src/core/server.cpp.i
@@ -190,7 +190,7 @@ src/core/server.i: src/core/server.cpp.i
 
 # target to preprocess a source file
 src/core/server.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/server.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.i
 .PHONY : src/core/server.cpp.i
 
 src/core/server.s: src/core/server.cpp.s
@@ -198,7 +198,7 @@ src/core/server.s: src/core/server.cpp.s
 
 # target to generate assembly for a file
 src/core/server.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/server.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.s
 .PHONY : src/core/server.cpp.s
 
 src/core/utility.o: src/core/utility.cpp.o
@@ -206,7 +206,7 @@ src/core/utility.o: src/core/utility.cpp.o
 
 # target to build an object file
 src/core/utility.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/utility.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o
 .PHONY : src/core/utility.cpp.o
 
 src/core/utility.i: src/core/utility.cpp.i
@@ -214,7 +214,7 @@ src/core/utility.i: src/core/utility.cpp.i
 
 # target to preprocess a source file
 src/core/utility.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/utility.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.i
 .PHONY : src/core/utility.cpp.i
 
 src/core/utility.s: src/core/utility.cpp.s
@@ -222,7 +222,7 @@ src/core/utility.s: src/core/utility.cpp.s
 
 # target to generate assembly for a file
 src/core/utility.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/core/utility.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.s
 .PHONY : src/core/utility.cpp.s
 
 src/dailyhub/application.o: src/dailyhub/application.cpp.o
@@ -230,7 +230,7 @@ src/dailyhub/application.o: src/dailyhub/application.cpp.o
 
 # target to build an object file
 src/dailyhub/application.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/dailyhub/application.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o
 .PHONY : src/dailyhub/application.cpp.o
 
 src/dailyhub/application.i: src/dailyhub/application.cpp.i
@@ -238,7 +238,7 @@ src/dailyhub/application.i: src/dailyhub/application.cpp.i
 
 # target to preprocess a source file
 src/dailyhub/application.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/dailyhub/application.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.i
 .PHONY : src/dailyhub/application.cpp.i
 
 src/dailyhub/application.s: src/dailyhub/application.cpp.s
@@ -246,7 +246,7 @@ src/dailyhub/application.s: src/dailyhub/application.cpp.s
 
 # target to generate assembly for a file
 src/dailyhub/application.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/dailyhub/application.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.s
 .PHONY : src/dailyhub/application.cpp.s
 
 src/dailyhub/kanban.o: src/dailyhub/kanban.cpp.o
@@ -254,7 +254,7 @@ src/dailyhub/kanban.o: src/dailyhub/kanban.cpp.o
 
 # target to build an object file
 src/dailyhub/kanban.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/dailyhub/kanban.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o
 .PHONY : src/dailyhub/kanban.cpp.o
 
 src/dailyhub/kanban.i: src/dailyhub/kanban.cpp.i
@@ -262,7 +262,7 @@ src/dailyhub/kanban.i: src/dailyhub/kanban.cpp.i
 
 # target to preprocess a source file
 src/dailyhub/kanban.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/dailyhub/kanban.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.i
 .PHONY : src/dailyhub/kanban.cpp.i
 
 src/dailyhub/kanban.s: src/dailyhub/kanban.cpp.s
@@ -270,7 +270,7 @@ src/dailyhub/kanban.s: src/dailyhub/kanban.cpp.s
 
 # target to generate assembly for a file
 src/dailyhub/kanban.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/dailyhub/kanban.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.s
 .PHONY : src/dailyhub/kanban.cpp.s
 
 src/main.o: src/main.cpp.o
@@ -278,7 +278,7 @@ src/main.o: src/main.cpp.o
 
 # target to build an object file
 src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o
 .PHONY : src/main.cpp.o
 
 src/main.i: src/main.cpp.i
@@ -286,7 +286,7 @@ src/main.i: src/main.cpp.i
 
 # target to preprocess a source file
 src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/main.cpp.i
 .PHONY : src/main.cpp.i
 
 src/main.s: src/main.cpp.s
@@ -294,7 +294,7 @@ src/main.s: src/main.cpp.s
 
 # target to generate assembly for a file
 src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/DailyHub_Server.dir/build.make CMakeFiles/DailyHub_Server.dir/src/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Dailyhub_Server.dir/build.make CMakeFiles/Dailyhub_Server.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
 # Help Target
@@ -305,13 +305,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... DailyHub_Server"
+	@echo "... Dailyhub_Server"
 	@echo "... src/core/database.o"
 	@echo "... src/core/database.i"
 	@echo "... src/core/database.s"
-	@echo "... src/core/rest_client.o"
-	@echo "... src/core/rest_client.i"
-	@echo "... src/core/rest_client.s"
+	@echo "... src/core/hash-password.o"
+	@echo "... src/core/hash-password.i"
+	@echo "... src/core/hash-password.s"
 	@echo "... src/core/server.o"
 	@echo "... src/core/server.i"
 	@echo "... src/core/server.s"

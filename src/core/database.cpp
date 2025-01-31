@@ -7,23 +7,21 @@ void PostgreSQLConnector::connect() {
 
   try {
     PostgreSQLConnector::conn_ = PQconnectdb(url.c_str());
-    if (PQstatus(PostgreSQLConnector::conn_) != CONNECTION_OK) {
-      std::string error_msg = "Connection Error: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_));
+    if (PQstatus(PostgreSQLConnector::conn_) == CONNECTION_BAD) {
       PQfinish(PostgreSQLConnector::conn_);
-      conn_ = nullptr;
-      throw std::runtime_error(error_msg);
+      PostgreSQLConnector::conn_ = nullptr;
+      throw std::runtime_error(std::string("Error connecting to PostgreSQL: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_))));
     }
   } catch(std::exception& e) {
-    spdlog::error("Error connecting to PostgreSQL: {}", e.what());
+    spdlog::error("{}", e.what());
   }
 }
 
 void PostgreSQLConnector::close() {
-  if (PostgreSQLConnector::conn_) {
+  if (PostgreSQLConnector::conn_ != nullptr) {
     PQfinish(PostgreSQLConnector::conn_);
+    PostgreSQLConnector::conn_ = nullptr;
   }
-
-  delete PostgreSQLConnector::conn_;
 }
 
 bool PostgreSQLConnector::isConnected() {

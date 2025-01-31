@@ -1,0 +1,44 @@
+[
+{
+  "directory": "/media/henrique/A/dailyhub-backend/build",
+  "command": "/usr/bin/g++ -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3 -g -std=gnu++17 -o CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o -c /media/henrique/A/dailyhub-backend/src/main.cpp",
+  "file": "/media/henrique/A/dailyhub-backend/src/main.cpp",
+  "output": "CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o"
+},
+{
+  "directory": "/media/henrique/A/dailyhub-backend/build",
+  "command": "/usr/bin/g++ -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3 -g -std=gnu++17 -o CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/server.cpp",
+  "file": "/media/henrique/A/dailyhub-backend/src/core/server.cpp",
+  "output": "CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o"
+},
+{
+  "directory": "/media/henrique/A/dailyhub-backend/build",
+  "command": "/usr/bin/g++ -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3 -g -std=gnu++17 -o CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/utility.cpp",
+  "file": "/media/henrique/A/dailyhub-backend/src/core/utility.cpp",
+  "output": "CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o"
+},
+{
+  "directory": "/media/henrique/A/dailyhub-backend/build",
+  "command": "/usr/bin/g++ -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3 -g -std=gnu++17 -o CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/database.cpp",
+  "file": "/media/henrique/A/dailyhub-backend/src/core/database.cpp",
+  "output": "CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o"
+},
+{
+  "directory": "/media/henrique/A/dailyhub-backend/build",
+  "command": "/usr/bin/g++ -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3 -g -std=gnu++17 -o CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp",
+  "file": "/media/henrique/A/dailyhub-backend/src/core/hash-password.cpp",
+  "output": "CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o"
+},
+{
+  "directory": "/media/henrique/A/dailyhub-backend/build",
+  "command": "/usr/bin/g++ -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3 -g -std=gnu++17 -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o -c /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp",
+  "file": "/media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp",
+  "output": "CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o"
+},
+{
+  "directory": "/media/henrique/A/dailyhub-backend/build",
+  "command": "/usr/bin/g++ -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3 -g -std=gnu++17 -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o -c /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp",
+  "file": "/media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp",
+  "output": "CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o"
+}
+]

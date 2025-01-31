@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <libpq-fe.h>
+#include <postgresql/libpq-fe.h>
 #include <stdexcept>
 #include <iomanip>
 #include <exception>

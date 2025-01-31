@@ -1,17 +1,15 @@
 version: "3.9"
 
 services:
-  db:
+  database:
     image: postgres
-    container_name: my-postgres-container
+    container_name: database
     shm_size: 128mb
     restart: always
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: zJ6anW4nkL6QyuOQ0jx1YbyTbAI1Aj
-      POSTGRES_DB: dailyhub
+    env_file:
+      - "server.env"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -21,17 +19,11 @@ services:
       retries: 3
       start_period: 5s
 
-  adminer:
-    image: adminer
-    restart: always
-    depends_on:
-      - db
-    ports:
-      - 8080:8080
-
   server:
-    image: .
+    image: mathteushenrique/dailyhub-server:latest
     restart: always
+    env_file:
+      - "server.env"
     depends_on:
       - db
     volumes:
