@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = -DASIO_STANDALONE -DSPDLOG_COMPILED_LIB
 
-CXX_INCLUDES = -I/usr/include/postgresql -I/usr/local/include/laserpants/dotenv-0.9.3
+CXX_INCLUDES = -I/usr/include/postgresql
 
 CXX_FLAGS = -g -std=gnu++17
 

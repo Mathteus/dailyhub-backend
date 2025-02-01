@@ -2,7 +2,6 @@
 #define SERVER_HPP
 
 #include <crow.h>
-#include "dotenv.h"
 #include <cstdlib>
 #include <string>
 #include <future>

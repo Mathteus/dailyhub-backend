@@ -17,7 +17,6 @@ set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 
 # LIBS Settings
 set(POSTGRESQL_INCLUDE_DIR "/usr/include/postgresql")
-set(DOTENV_SOURCE "/usr/local/include/laserpants/dotenv-0.9.3")
 set(SODIUM_SOURCE "/usr/include")
 set(SODIUM_LIBRARIES "/usr/lib/x86_64-linux-gnu/libsodium.a")
 include_directories(${POSTGRESQL_INCLUDE_DIR})
@@ -35,6 +34,7 @@ set(SRC
   src/core/database.cpp
   src/core/hash-password.cpp
   src/core/hash-password.hpp
+  src/core/httplib.h
   src/dailyhub/application.hpp
   src/dailyhub/application.cpp
   src/dailyhub/kanban.hpp

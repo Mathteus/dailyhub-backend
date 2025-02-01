@@ -6,6 +6,8 @@ RUN apt-get update && apt-get install -y \
   build-essential \
   cmake \
   git \
+  curl \
+  zip \
   libcurl4-openssl-dev \
   libssl-dev \
   libpq-dev \
@@ -44,4 +46,5 @@ COPY --from=build-stage /app/build/Dailyhub_Server /usr/local/bin/Dailyhub_Serve
 
 # Define o diretório de trabalho e o comando padrão
 WORKDIR /app
+EXPOSE 7845
 CMD ["Dailyhub_Server"]

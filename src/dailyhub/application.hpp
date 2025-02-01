@@ -6,6 +6,7 @@
 #include "../core/server.hpp"
 #include "../core/utility.hpp"
 #include "../core/hash-password.hpp"
+#include "../core/httplib.h"
 
 #include <iostream>
 #include <string>
@@ -13,7 +14,6 @@
 #include <thread>
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
-#include <httplib.h>
 #include <sstream>
 
 class DailyHub {
