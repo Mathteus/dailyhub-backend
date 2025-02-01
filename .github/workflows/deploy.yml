@@ -44,5 +44,5 @@ jobs:
           docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/dailyhub-server:latest
 
           # Roda o contêiner
-          docker run -d -rm -p 7845:7845 --name dailyhub-container ${{ secrets.DOCKER_HUB_USERNAME }}/dailyhub-server:latest
+          docker run -d --rm -p 7845:7845 --name dailyhub-container ${{ secrets.DOCKER_HUB_USERNAME }}/dailyhub-server:latest
           EOF
