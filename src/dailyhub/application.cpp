@@ -1,47 +1,45 @@
 #include "application.hpp"
 
-bool DailyHub::Register(std::string user, std::string password, std::string email) {
-  const auto [hash, salt] = PasswordHasher::to_hash_pass(password);
-  // try {
-  // } catch (const std::exception& e) {
-  //   spdlog::error("Error hashing password: {}", e.what());
-  //   return false;
-  // }
-
-  std::stringstream ss;
-  ss << "INSERT INTO users (hash, salt, username, email) VALUES ('" << hash << "', '" << salt << "', '" << user << "', '"  << email << "');";
-  
-  PGresult* result = PostgreSQLConnector::executeQuery(ss.str());
-  if (result) {
-    PostgreSQLConnector::clearResult(result);
-    spdlog::info("User registered successfully");
-    return true;
-  } else {
-    spdlog::error("Error registering user");
-    return false;
+nlohmann::json Dailyhub::Register(std::string user, std::string password, std::string email) {
+  try {
+    const auto [hash, salt] = PasswordHasher::to_hash_pass(password);
+    std::stringstream ss{};
+    ss << "INSERT INTO users (hash, salt, username, email) VALUES ('" << hash << "', '" << salt << "', '" << user << "', '"  << email << "');";
+    
+    const auto response = DataBase::executeQuery(ss.str());
+    if (response.status) {
+      spdlog::info("Usuário cadastrado com sucesso.");
+      DataBase::cleanResult(response.result);
+      return {
+        {"status", 200},
+        {"message", ""}
+      };
+    }
+    spdlog::error("Erro ao cadastrar usuário. ");
+    return {
+      {"status", 200},
+      {"message", response.error}
+    };
+  } catch (const std::exception& e) {
+    spdlog::error("Error hashing password: {}", e.what());
+    return {
+      {"status", 500},
+      {"message", e.what()}
+    };
   }
 }
 
-DailyHub::DailyHub() {
-  PostgreSQLConnector::connect();
-  Servidor::Start();
+Dailyhub::Application::Application() {
+  if (DataBase::connect()) {
+    std::string sqlFile{Utility::readFilesSQL("../database/nanoid")};
+    DataBase::executeQuery(sqlFile);
+    sqlFile = Utility::readFilesSQL("../database/commands");
+    DataBase::executeQuery(sqlFile);
+    Servidor::Start();
+  }
 }
 
-DailyHub::~DailyHub() {
+Dailyhub::Application::~Application() {
   Servidor::Stop();
-  PostgreSQLConnector::close();
-}
-
-void DailyHub::run() {
-  spdlog::info("Running APP..");
-  // try {
-  //   httplib::Client cli("https://api.restful-api.dev");
-  //   auto res = cli.Get("/objects");
-  //   if (res->status == httplib::StatusCode::OK_200) {
-  //     std::cout << res->body << std::endl;
-  //   }
-  // } catch(std::exception& e) {
-  //   auto err = e.what();
-  //   spdlog::error("Request failed: {}", err);
-  // }
+  DataBase::close();
 }

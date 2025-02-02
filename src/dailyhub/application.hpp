@@ -16,17 +16,16 @@
 #include <nlohmann/json.hpp>
 #include <sstream>
 
-class DailyHub {
-public: 
-  DailyHub();
-  ~DailyHub();
-  void run();
+namespace Dailyhub {
+  class Application {
+  public: 
+    Application();
+    ~Application();
+  };
 
-public:
-  bool Login(std::string user, std::string password);
-  bool Register(std::string user, std::string password, std::string email);
-  void SendEmail(std::string email);
-  
+  nlohmann::json Login(std::string user, std::string password);
+  nlohmann::json Register(std::string user, std::string password, std::string email);
+  nlohmann::json SendEmail(std::string email);
 };
 
 #endif

@@ -8,21 +8,32 @@
 #include <iomanip>
 #include <exception>
 #include <spdlog/spdlog.h>
+#include <memory>
+#include <nlohmann/json.hpp>
 
-class PostgreSQLConnector {
+typedef struct {
+  bool status;
+  PGresult* result;
+  std::string error;
+} ResponseDatabase;
+
+
+class DataBase {
 private:
   static PGconn* conn_;
+  static void DisplayQueryResult(PGresult* res);
+  static bool isConnected();
 
 public:
-  PostgreSQLConnector() = default;
-  ~PostgreSQLConnector() = default;
+  DataBase() = delete;
+  ~DataBase() = delete;
 
-  static void connect();
+  static bool connect();
   static void close();
-  static bool isConnected();
-  static PGresult* executeQuery(const std::string& query);
-  static void clearResult(PGresult* result);
-  static void DisplayQueryResult(PGresult* res);
+  static ResponseDatabase executeQuery(const std::string& query);
+  static nlohmann::json resultToJson(PGresult* res);
+  static void cleanResult(PGresult* res);
 };
+
 
 #endif

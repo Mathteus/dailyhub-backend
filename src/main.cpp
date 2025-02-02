@@ -2,7 +2,6 @@
 #include "dailyhub/application.hpp"
 
 int main(int argc, char** argv) {
-	DailyHub app;
-	app.run();
+	const Dailyhub::Application app;
 	return EXIT_SUCCESS;
 }

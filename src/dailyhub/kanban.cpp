@@ -3,7 +3,7 @@
 void Kanban::createTask(const std::string& userid, const std::string& title, uint16_t status, const std::string& description) {
   std::stringstream query;
   // query << "insert into kanban (userid, taskid, title, description, status) values (" << userid << "," << taskid << "," << title << "," << description << "," << status << ");";
-  PostgreSQLConnector::executeQuery(query.str());
+  DataBase::executeQuery(query.str());
 }
 
 void updateTask(const std::string& userid, const std::string& taskid, std::map<std::string, std::string> updates) {
@@ -26,23 +26,23 @@ void updateTask(const std::string& userid, const std::string& taskid, std::map<s
     query << " set status = " << Utility::Integer(fields[2]);
   }
   
-  PostgreSQLConnector::executeQuery(query.str());
+  DataBase::executeQuery(query.str());
 }
 
 void Kanban::deleteTask(const std::string& userid, const std::string& taskid) {
   std::stringstream query;
   query << "delete from kanban where userid = " << userid << " and taskid = " << taskid << "';";
-  PostgreSQLConnector::executeQuery(query.str());
+  DataBase::executeQuery(query.str());
 }
 
 void Kanban::listTasksByStatus(const std::string& userid, uint16_t status) {
   std::stringstream query;
   query << "select * from kanban where userid = " << userid << " and status = " << status << ';';
-  PostgreSQLConnector::executeQuery(query.str());
+  DataBase::executeQuery(query.str());
 }
 
 void Kanban::listAllTasks(const std::string& userid) {
   std::stringstream query;
   query << "select * from kanban where userid = " << userid << ';';
-  PostgreSQLConnector::executeQuery(query.str());
+  DataBase::executeQuery(query.str());
 }

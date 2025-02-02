@@ -9,7 +9,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - "server.env"
+      - "test.env"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -19,11 +19,19 @@ services:
       retries: 3
       start_period: 5s
 
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+
   server:
     image: mathteushenrique/dailyhub-server:latest
     restart: always
     env_file:
-      - "server.env"
+      - "test.env"
     depends_on:
       - database
     volumes:

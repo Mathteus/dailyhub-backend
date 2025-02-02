@@ -6,3 +6,4 @@ database/
 Dockerfile
 .dockerignore
 README.md
+docker-compose.yml

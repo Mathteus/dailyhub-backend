@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
   libcurl4-openssl-dev \
   libssl-dev \
   libpq-dev \
+  libpqxx \
   libsodium-dev \
   pkg-config \
   && rm -rf /var/lib/apt/lists/*
@@ -39,6 +40,7 @@ RUN apt-get update && apt-get install -y \
   libssl3 \
   libpq5 \
   libsodium23 \
+  libpqxx \
   && rm -rf /var/lib/apt/lists/*
 
 # Copia o executável do estágio de build

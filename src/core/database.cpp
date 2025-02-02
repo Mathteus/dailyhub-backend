@@ -1,79 +1,126 @@
 #include "database.hpp"
 
-PGconn* PostgreSQLConnector::conn_ = nullptr;
+#include <cstdlib> // Para std::getenv
+#include <sstream> // Para std::ostringstream
 
-void PostgreSQLConnector::connect() {
+PGconn* DataBase::conn_ = nullptr;
+
+bool DataBase::connect() {
   std::string url{std::getenv("URL_POSTGRES")};
+  if (isConnected()) {
+    spdlog::warn("Conexão já está estabelecida.");
+    return true;
+  }
 
-  try {
-    PostgreSQLConnector::conn_ = PQconnectdb(url.c_str());
-    if (PQstatus(PostgreSQLConnector::conn_) == CONNECTION_BAD) {
-      PQfinish(PostgreSQLConnector::conn_);
-      PostgreSQLConnector::conn_ = nullptr;
-      throw std::runtime_error(std::string("Error connecting to PostgreSQL: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_))));
-    }
-  } catch(std::exception& e) {
-    spdlog::error("{}", e.what());
+  conn_ = PQconnectdb(url.c_str());
+  if (PQstatus(conn_) == CONNECTION_OK) {
+    spdlog::info("Conexão com o banco de dados estabelecida.");
+    return true;
+  } else {
+    spdlog::error("Falha ao conectar no banco de dados: {}", PQerrorMessage(conn_));
+    PQfinish(conn_);
+    conn_ = nullptr;
+    return false;
   }
 }
 
-void PostgreSQLConnector::close() {
-  if (PostgreSQLConnector::conn_ != nullptr) {
-    PQfinish(PostgreSQLConnector::conn_);
-    PostgreSQLConnector::conn_ = nullptr;
+void DataBase::close() {
+  if (conn_ != nullptr) {
+    PQfinish(conn_);
+    conn_ = nullptr;
+    spdlog::info("Conexão com o banco de dados fechada.");
   }
 }
 
-bool PostgreSQLConnector::isConnected() {
-  return PQstatus(PostgreSQLConnector::conn_) == CONNECTION_OK;
+bool DataBase::isConnected() {
+  return conn_ != nullptr && PQstatus(conn_) == CONNECTION_OK;
 }
 
-PGresult* PostgreSQLConnector::executeQuery(const std::string& query) {
-  try {
-    if (!isConnected()) {
-      throw std::runtime_error("Connection not available, unable to execute query");
-    }
-
-    PGresult* result = PQexec(PostgreSQLConnector::conn_, query.c_str());
-    if (PQresultStatus(result) != PGRES_TUPLES_OK && PQresultStatus(result) != PGRES_COMMAND_OK) {
-      std::string error_msg = "Query Error: " + std::string(PQerrorMessage(PostgreSQLConnector::conn_));
-      PQclear(result);
-      throw std::runtime_error(error_msg);
-    }
-    return result;
-  } catch(std::exception& e) {
-    spdlog::error("Error executeQuery PostgreSQL: {}", e.what());
-    return nullptr;
+ResponseDatabase DataBase::executeQuery(const std::string& query) {
+  ResponseDatabase response;
+  if (!isConnected()) {
+  spdlog::error("Não há conexão com o banco de dados para executar a query.");
+    response.status = false;
+    response.error = "Não há conexão com o banco de dados para executar a query.";
+    return response;
   }
-}
 
-void PostgreSQLConnector::clearResult(PGresult* result) {
-  if(result) {
-    PQclear(result);
+  PGresult* res = PQexec(conn_, query.c_str());
+  if(PQresultStatus(res) != PGRES_TUPLES_OK && PQresultStatus(res) != PGRES_COMMAND_OK) {
+    std::string error{PQerrorMessage(conn_)};
+    spdlog::error("Erro ao executar a query: {}", error);
+    PQclear(res);
+    response.status = false;
+    response.error = error;
+    return response;
   }
+
+  response.status = true;
+  response.result = res;
+  return response;
 }
 
-void PostgreSQLConnector::DisplayQueryResult(PGresult* res) {
-  // Pega o número de linhas e colunas
-  int rows = PQntuples(res);
+void DataBase::cleanResult(PGresult* res) {
+  PQclear(res);
+}
+
+void DataBase::DisplayQueryResult(PGresult* res) {
+  if (PQntuples(res) == 0) {
+    std::cout << "No results found.\n";
+    return;
+  }
+
   int cols = PQnfields(res);
-
-  // Exibe os nomes das colunas
-  for(int col = 0; col < cols; col++){
-    std::cout << std::setw(15) << std::left << PQfname(res, col); // Define o tamanho da coluna
+  for (int col = 0; col < cols; ++col) {
+    std::cout << std::setw(15) << std::left << PQfname(res, col);
   }
 
-  std::cout << std::endl;
-  for(int col = 0; col < cols; col++){
-    std::cout << std::setw(15) << std::left << "----------------"; // Separador
+  std::cout << '\n';
+  for (int col = 0; col < cols; ++col) {
+    std::cout << std::setw(15) << std::left << "----------------";
   }
-  std::cout << std::endl;
 
-  // Exibe os dados
+  std::cout << '\n';
+
+  int rows = PQntuples(res);
   for (int row = 0; row < rows; ++row) {
     for (int col = 0; col < cols; ++col) {
-      std::cout << std::setw(15) << std::left << PQgetvalue(res, row, col);
+      if (PQgetisnull(res, row, col)) {
+        std::cout << std::setw(15) << std::left << "(null)";
+        } else {
+        std::cout << std::setw(15) << std::left << PQgetvalue(res, row, col);
+      }
     }
-    std::cout << std::endl;
+    std::cout << '\n';
   }
+  PQclear(res);
+}
+
+nlohmann::json DataBase::resultToJson(PGresult* res) {
+  nlohmann::json j;
+  if (PQntuples(res) == 0) {
+    PQclear(res);
+    return j;
+  }
+    
+  int cols = PQnfields(res);
+  std::vector<std::string> column_names;
+  for (int col = 0; col < cols; ++col) {
+    column_names.push_back(PQfname(res,col));
+  }
+    
+  int rows = PQntuples(res);
+  for (int row = 0; row < rows; ++row) {
+    nlohmann::json row_json;
+    for (size_t col = 0; col < column_names.size(); ++col) {
+      if(PQgetisnull(res, row, col)){
+        row_json[column_names[col]] = nullptr;
+      } else {
+        row_json[column_names[col]] = PQgetvalue(res, row, col);
+      }
+    }
+    j.push_back(row_json);
+  }
+  PQclear(res);
+  return j;
 }

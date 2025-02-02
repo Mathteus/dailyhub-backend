@@ -13,6 +13,7 @@ private:
   static void Routes();
   static std::thread server_worker;
   static void start_server();
+  static bool running;
 
 public:
   Servidor() = default;

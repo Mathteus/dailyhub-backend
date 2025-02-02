@@ -3,6 +3,7 @@
 
 crow::SimpleApp Servidor::app = NULL;
 std::thread Servidor::server_worker;
+bool Servidor::running = false;
 
 bool verifyKeyApi(const crow::request& apikey) {
   return std::string(std::getenv("X_API_KEY")) == apikey.get_header_value("x-api-key");
@@ -45,6 +46,7 @@ void Servidor::Routes() {
 void Servidor::start_server() {
   auto server_future = Servidor::app.bindaddr("0.0.0.0").port(7845).run_async();
   server_future.wait();
+  running = true;
 }
 
 void Servidor::Start() {
@@ -53,7 +55,9 @@ void Servidor::Start() {
 }
 
 void Servidor::Stop()  {
-  Servidor::app.stop();
-  Servidor::server_worker.join();
+  if (running) {
+    Servidor::app.stop();
+    Servidor::server_worker.join();
+  }
 }
 
