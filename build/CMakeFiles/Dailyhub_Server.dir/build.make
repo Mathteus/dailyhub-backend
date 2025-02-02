@@ -73,99 +73,99 @@ CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o: CMakeFiles/Dailyhub_Server.dir/fl
 CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o: /media/henrique/A/dailyhub-backend/src/main.cpp
 CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o: CMakeFiles/Dailyhub_Server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/henrique/A/dailyhub-backend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o -c /media/henrique/A/dailyhub-backend/src/main.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/main.cpp.o -c /media/henrique/A/dailyhub-backend/src/main.cpp
 
 CMakeFiles/Dailyhub_Server.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Dailyhub_Server.dir/src/main.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/main.cpp > CMakeFiles/Dailyhub_Server.dir/src/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/main.cpp > CMakeFiles/Dailyhub_Server.dir/src/main.cpp.i
 
 CMakeFiles/Dailyhub_Server.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Dailyhub_Server.dir/src/main.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/main.cpp -o CMakeFiles/Dailyhub_Server.dir/src/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/main.cpp -o CMakeFiles/Dailyhub_Server.dir/src/main.cpp.s
 
 CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o: CMakeFiles/Dailyhub_Server.dir/flags.make
 CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o: /media/henrique/A/dailyhub-backend/src/core/server.cpp
 CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o: CMakeFiles/Dailyhub_Server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/henrique/A/dailyhub-backend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/server.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/server.cpp
 
 CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/server.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/server.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.i
 
 CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/server.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/server.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/server.cpp.s
 
 CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o: CMakeFiles/Dailyhub_Server.dir/flags.make
 CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o: /media/henrique/A/dailyhub-backend/src/core/utility.cpp
 CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o: CMakeFiles/Dailyhub_Server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/henrique/A/dailyhub-backend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/utility.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/utility.cpp
 
 CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/utility.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/utility.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.i
 
 CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/utility.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/utility.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/utility.cpp.s
 
 CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o: CMakeFiles/Dailyhub_Server.dir/flags.make
 CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o: /media/henrique/A/dailyhub-backend/src/core/database.cpp
 CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o: CMakeFiles/Dailyhub_Server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/henrique/A/dailyhub-backend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/database.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/database.cpp
 
 CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/database.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/database.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.i
 
 CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/database.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/database.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/database.cpp.s
 
 CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o: CMakeFiles/Dailyhub_Server.dir/flags.make
 CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o: /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp
 CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o: CMakeFiles/Dailyhub_Server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/henrique/A/dailyhub-backend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.o -c /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp
 
 CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp > CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.i
 
 CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/core/hash-password.cpp -o CMakeFiles/Dailyhub_Server.dir/src/core/hash-password.cpp.s
 
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o: CMakeFiles/Dailyhub_Server.dir/flags.make
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o: /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o: CMakeFiles/Dailyhub_Server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/henrique/A/dailyhub-backend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o -c /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.o -c /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp
 
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp > CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp > CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.i
 
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/dailyhub/application.cpp -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/application.cpp.s
 
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o: CMakeFiles/Dailyhub_Server.dir/flags.make
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o: /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o: CMakeFiles/Dailyhub_Server.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/media/henrique/A/dailyhub-backend/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o -c /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o -MF CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o.d -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.o -c /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp
 
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp > CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp > CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.i
 
 CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/henrique/A/dailyhub-backend/src/dailyhub/kanban.cpp -o CMakeFiles/Dailyhub_Server.dir/src/dailyhub/kanban.cpp.s
 
 # Object files for target Dailyhub_Server
 Dailyhub_Server_OBJECTS = \
