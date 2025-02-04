@@ -18,28 +18,30 @@
 ### Feature
 
 - [ ] Sistema de usuarios
-  - Login / Registro
+  - [ ] Login
+  - [ ] Registro
+  - [ ] Autenticação
 
 - [ ] Sistema do kanban
-  - criação de tarefas
-  - deletar tarefas
-  - atualizar tarefas.
+  - [ ] criação de tarefas
+  - [ ] deletar tarefas
+  - [ ] atualizar tarefas.
 
 - [ ] Sistema de finanças
-  - conversor de moedas
-  - adcionar cobrança/ganho
-  - editar cobrança/ganho
-  - deletar cobrança/ganho
-  - filtrar por data cobrança/ganho
+  - [ ] conversor de moedas
+  - [ ] adcionar cobrança/ganho
+  - [ ] editar cobrança/ganho
+  - [ ] deletar cobrança/ganho
+  - [ ] filtrar por data cobrança/ganho
 
 - [ ] Sistema de Jornal
-  - Temperatura Atual
-  - Ultimas Noticias
-  - Messagem boa/insentivo
-  - Horoscopo
+  - [ ] Temperatura Atual
+  - [ ] Ultimas Noticias
+  - [ ] Messagem boa/insentivo
+  - [ ] Horoscopo
 
 - [ ] Sistema blog
-  - Criar post
-  - Ver últimos posts
+  - [ ] Criar post
+  - [ ] Ver últimos posts
 
 O servidor do Dailyhub está em Desenvolvimento.

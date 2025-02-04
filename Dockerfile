@@ -21,7 +21,7 @@ WORKDIR /opt
 RUN git clone https://github.com/Microsoft/vcpkg.git && \
   cd vcpkg && \
   ./bootstrap-vcpkg.sh && \
-  ./vcpkg install crow spdlog nlohmann-json
+  ./vcpkg install crow spdlog nlohmann-json jwt-cpp
 
 # Copia o código-fonte para o contêiner
 WORKDIR /app

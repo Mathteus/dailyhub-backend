@@ -9,6 +9,7 @@ find_package(spdlog REQUIRED)
 find_package(CURL REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(OpenSSL REQUIRED)
+find_package(jwt-cpp REQUIRED)
 
 # C++ Settings
 set(CMAKE_CXX_STANDARD 17)
@@ -24,22 +25,15 @@ include_directories(${DOTENV_SOURCE})
 include_directories(${SODIUM_SOURCE})
 
 # SOURCE
-set(SRC
-  src/main.cpp
-  src/core/server.hpp
-  src/core/server.cpp
-  src/core/utility.hpp
-  src/core/utility.cpp
-  src/core/database.hpp
-  src/core/database.cpp
-  src/core/hash-password.cpp
-  src/core/hash-password.hpp
-  src/core/httplib.h
-  src/dailyhub/application.hpp
-  src/dailyhub/application.cpp
-  src/dailyhub/kanban.hpp
-  src/dailyhub/kanban.cpp
-)
+file(GLOB DAILYHUB_SOURCES "src/dailyhub/*.cpp")
+file(GLOB DAILYHUB_HEADERS "src/dailyhub/*.hpp")
+file(GLOB CORE_SOURCES "src/core/*.cpp")
+file(GLOB CORE_HEADERS "src/core/*.hpp")
+
+list(APPEND SRC ${DAILYHUB_SOURCES})
+list(APPEND SRC ${DAILYHUB_HEADERS})
+list(APPEND SRC ${CORE_SOURCES})
+list(APPEND SRC ${CORE_HEADERS})
 
 # EXE and LIBRARIES C++
 add_executable(${PROJECT_NAME} ${SRC})
@@ -52,6 +46,7 @@ target_link_libraries(
   nlohmann_json::nlohmann_json
   OpenSSL::SSL
   OpenSSL::Crypto
+  jwt-cpp::jwt-cpp
   ${CURL_LIBRARIES}
   ${PostgreSQL_LIBRARIES}
   ${SODIUM_LIBRARIES}

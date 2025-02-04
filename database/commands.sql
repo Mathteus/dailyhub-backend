@@ -1,47 +1,63 @@
-create table if not exists users (
-  user_id varchar(6) not null default nanoid(6),
-  hash varchar(30) not null,
-  salt varchar(30) not null,
-  role varchar(10) not null default 'user',
-  name varchar(30) not null,
-  tag varchar(26) not null unique,
-  email varchar(60) not null unique,
-  last_login date not null default now(),
-  created_at date not null default now(),
-  constraint pk_userid primary key (user_id)
+CREATE TABLE IF NOT EXISTS users (
+  user_id VARCHAR(6) NOT NULL DEFAULT nanoid(6),
+  hash VARCHAR(30) NOT NULL,
+  salt VARCHAR(30) NOT NULL,
+  role VARCHAR(10) NOT NULL DEFAULT 'user',
+  name VARCHAR(30) NOT NULL,
+  tag VARCHAR(26) NOT NULL UNIQUE,
+  email VARCHAR(60) NOT NULL UNIQUE,
+  last_login DATE NOT NULL DEFAULT now(),
+  created_at DATE NOT NULL DEFAULT now(),
+  CONSTRAINT pk_userid PRIMARY KEY (user_id)
 );
 
-create table if not exists blog (
-  postid varchar(8) not null default nanoid(8),
-  user_id varchar(6) not null,
-  name varchar(30) not null,
-  content text not null,
-  created_at date not null default now(),
-  awesome integer not null default 0,
-  constraint pk_postid primary key (postid),
-  constraint pk_userid foreign key (user_id) references users(user_id) on delete cascade
+CREATE TABLE IF NOT EXISTS blog (
+  postid VARCHAR(8) NOT NULL DEFAULT nanoid(8),
+  user_id VARCHAR(6) NOT NULL,
+  name VARCHAR(30) NOT NULL,
+  content TEXT NOT NULL,
+  created_at DATE NOT NULL DEFAULT now(),
+  awesome INTEGER NOT NULL DEFAULT 0,
+  CONSTRAINT pk_postid PRIMARY KEY (postid),
+  CONSTRAINT pk_userid FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-create table if not exists finance (
-  transactionid varchar(8) not null default nanoid(8),
-  user_id varchar(6) not null,
-  type char not null default 's',
-  name varchar(26) not null,
-  description text not null,
-  amount decimal(10, 2) not null,
-  created_at date not null default now(),
-  constraint pk_transactionid primary key (transactionid),
-  constraint fk_userid foreign key (user_id) references users(user_id) on delete cascade
+CREATE TABLE IF NOT EXISTS finance (
+  transactionid VARCHAR(8) NOT NULL DEFAULT nanoid(8),
+  user_id VARCHAR(6) NOT NULL,
+  type CHAR NOT NULL DEFAULT 's',
+  name VARCHAR(26) NOT NULL,
+  description TEXT NOT NULL,
+  amount DECIMAL(10, 2) NOT NULL,
+  created_at DATE NOT NULL DEFAULT now(),
+  CONSTRAINT pk_transactionid PRIMARY KEY (transactionid),
+  CONSTRAINT fk_userid FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
-create table if not exists kanban (
-  taskid varchar(8) not null default nanoid(8),
-  user_id varchar(6) not null,
-  title varchar(20) not null,
-  description text not null,
-  status char not null default 'a',
-  created_at date not null default now(),
-  last_update date not null default now(),
-  constraint pk_taskid primary key (taskid),
-  constraint fk_userid foreign key (user_id) references users(user_id) on delete cascade
+CREATE TABLE IF NOT EXISTS kanban (
+  taskid VARCHAR(8) NOT NULL DEFAULT nanoid(8),
+  user_id VARCHAR(6) NOT NULL,
+  title VARCHAR(20) NOT NULL,
+  description TEXT NOT NULL,
+  status CHAR NOT NULL DEFAULT 'a',
+  created_at DATE NOT NULL DEFAULT now(),
+  last_upDATE DATE NOT NULL DEFAULT now(),
+  CONSTRAINT pk_taskid PRIMARY KEY (taskid),
+  CONSTRAINT fk_userid FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
+
+CREATE OR REPLACE FUNCTION upDATE_last_login()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.token IS DISTINCT FROM OLD.token THEN
+    NEW.last_login = NOW();
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_upDATE_last_login
+BEFORE UPDATE ON users
+FOR EACH ROW
+EXECUTE FUNCTION upDATE_last_login();
+

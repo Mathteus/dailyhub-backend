@@ -4,10 +4,23 @@
 #include <random>
 #include <ctime>
 #include <string>
-#include <cstdlib> // Para std::atoi
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <memory>
+#include <chrono>
+#include <thread>
+#include <vector>
+#include <map>
+#include <mutex>
+#include <algorithm>
+
+struct TimedData {
+  std::shared_ptr<std::map<std::string, std::string>> data;
+  int seconds;
+};
+
 
 namespace Utility {
   uint32_t Integer(std::string str);
@@ -20,6 +33,8 @@ namespace Utility {
   std::string base64_encode(const std::string& input);
   std::string base64_decode(const std::string& input);
   std::string readFilesSQL(const std::string& sqlFile);
+  void useTokenUser(const std::map<std::string, std::string>& data);
+  std::string getTokerrUser(const std::string& key);
 }
 
 #endif

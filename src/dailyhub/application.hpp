@@ -15,6 +15,16 @@
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
 #include <sstream>
+#include <unordered_map>
+#include <regex>
+#include <fstream>
+
+typedef struct {
+  std::string name;
+  std::string code;
+  std::string message;
+  std::string email;
+} User_Register_Email;
 
 namespace Dailyhub {
   class Application {
@@ -23,9 +33,9 @@ namespace Dailyhub {
     ~Application();
   };
 
-  nlohmann::json Login(std::string user, std::string password);
-  nlohmann::json Register(std::string user, std::string password, std::string email);
-  nlohmann::json SendEmail(std::string email);
+  nlohmann::json Login_On_Database(std::string user, std::string password);
+  nlohmann::json Register_On_Database(std::string user, std::string password, std::string email);
+  nlohmann::json Send_Email(const User_Register_Email& user);
 };
 
 #endif

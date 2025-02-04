@@ -22,7 +22,6 @@ crow::response loginUser(const crow::request& req) {
 
 crow::response registerUser(const crow::request& req) {
   if (verifyKeyApi(req)) {
-    
     return crow::response(200, "Register My APP");
   }
 

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Código de Verificação</title>
+  <title>Dailyhub</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -36,14 +36,14 @@
 
 <body>
   <div class="container">
-    <p>Olá, <span id="userName">USERNAME</span>,</p>
+    <p>Olá, <span id="userName">{{ USERNAME }}</span>,</p>
     <p>Seu código de verificação é:</p>
     <div class="verification-code">
-      <span id="verificationCode">CODE</span>
+      <span id="verificationCode">{{ CODE }}</span>
     </div>
-    <p id="text-message">MESSAGE_TEXT</p>
+    <p id="text-message">{{ MESSAGE_TEXT }}</p>
   </div>
-  <footer>Atenciosamente, Dailyhub</footer>
+  <footer>Atenciosamente, Dailyhub.</footer>
 </body>
 
 </html>
