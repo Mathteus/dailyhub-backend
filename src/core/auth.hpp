@@ -2,27 +2,22 @@
 #define AUTH_HPP
 
 #include <iostream>
-#include <memory>
 #include <string>
 #include <chrono>
-#include <thread>
 #include <map>
-#include <mutex>
 #include <jwt-cpp/jwt.h>
-#include <random>
 #include <sstream>
+#include <spdlog/spdlog.h>
+#include <nlohmann/json.hpp>
 
-class AuthManager : public std::enable_shared_from_this<AuthManager> {
-public:
-  static std::string generateJWT(const std::string& username);
-  static bool verifyJWT(const std::string& token);
-  
-  AuthManager() = default;
-  ~AuthManager() = default;
+typedef struct {
+  bool success;
+  std::string username;
+} Auth_Response;
 
-private:
-  static const std::string jwtSecret;
-  static std::string generateRandomCode(int length = 6);
+namespace AuthManager {
+  std::string generateJWT(const std::string& username);
+  Auth_Response verifyJWT(const std::string& token);
 };
 
 #endif
