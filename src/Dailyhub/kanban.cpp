@@ -1,8 +1,7 @@
-#include "kanban.hpp"
+#include "Dailyhub/kanban.hpp"
 
 void Kanban::createTask(const std::string& userid, const std::string& title, uint16_t status, const std::string& description) {
   std::stringstream query;
-  // query << "insert into kanban (userid, taskid, title, description, status) values (" << userid << "," << taskid << "," << title << "," << description << "," << status << ");";
   DataBase::executeQuery(query.str());
 }
 

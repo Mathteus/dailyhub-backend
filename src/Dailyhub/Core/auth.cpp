@@ -1,4 +1,4 @@
-#include "auth.hpp"
+#include "Dailyhub/Core/auth.hpp"
 
 static const std::string jwtSecret{std::getenv("JWT_SECRET")};
 

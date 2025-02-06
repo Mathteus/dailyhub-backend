@@ -1,5 +1,5 @@
-#ifndef KANABAN_HPP
-#define KANABAN_HPP
+#ifndef DAILYHUB_KANABAN_HPP
+#define DAILYHUB_KANABAN_HPP
 
 #include <iostream>
 #include <vector>
@@ -10,6 +10,7 @@
 #include "../core/database.hpp"
 #include "../core/utility.hpp"
 
+namespace Dailyhub {
 class Kanban {
 private:
   typedef struct {
@@ -31,6 +32,7 @@ public:
   void deleteTask(const std::string& userid, const std::string& taskid);
   void listTasksByStatus(const std::string& userid, uint16_t status);
   void listAllTasks(const std::string& userid);
+};
 };
 
 #endif

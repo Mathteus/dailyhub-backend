@@ -1,5 +1,5 @@
-#ifndef UTILITY_HPP
-#define UTILITY_HPP
+#ifndef DAILYHUB_UTILITY_HPP
+#define DAILYHUB_UTILITY_HPP
 
 #include <random>
 #include <ctime>
@@ -15,12 +15,15 @@
 #include <map>
 #include <mutex>
 #include <algorithm>
+#include <spdlog/spdlog.h>
 
+
+namespace Dailyhub {
+namespace Core {
 struct TimedData {
   std::shared_ptr<std::map<std::string, std::string>> data;
   int seconds;
 };
-
 
 namespace Utility {
   uint32_t Integer(std::string str);
@@ -33,8 +36,8 @@ namespace Utility {
   std::string base64_encode(const std::string& input);
   std::string base64_decode(const std::string& input);
   std::string readFilesSQL(const std::string& sqlFile);
-  void useTokenUser(const std::map<std::string, std::string>& data);
-  std::string getTokerrUser(const std::string& key);
-}
+};
+};
+};
 
 #endif

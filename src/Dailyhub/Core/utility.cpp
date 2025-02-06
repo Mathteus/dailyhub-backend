@@ -1,53 +1,4 @@
-#include "utility.hpp"
-
-std::vector<TimedData> timedDataVector;
-std::mutex dataMutex;
-const uint8_t TIME_TOKEN{30};
-
-void useTokenUser(const std::map<std::string, std::string>& data) {
-  auto sharedPtr = std::make_shared<std::map<std::string, std::string>>(data);
-  std::weak_ptr<std::map<std::string, std::string>> weakPtr = sharedPtr;
-
-  {  // Escopo do mutex lock para inserir a struct TimedData no vetor
-    std::lock_guard<std::mutex> lock(dataMutex);
-    timedDataVector.push_back({sharedPtr, TIME_TOKEN});
-  }
-
-  std::thread([weakPtr]() {
-    std::this_thread::sleep_for(std::chrono::seconds(TIME_TOKEN));
-    if (auto ptr = weakPtr.lock()) {
-      {  // Escopo do mutex lock para remover a struct TimedData no vetor
-        std::lock_guard<std::mutex> lock(dataMutex);
-        for (auto it = timedDataVector.begin(); it != timedDataVector.end();) {
-          if (it->data == ptr) {
-            it = timedDataVector.erase(it);
-            break;
-          } else {
-            ++it;
-          }
-        }
-      }
-      ptr.reset();
-    }
-  }).detach();
-}
-
-std::string Utility::getTokerrUser(const std::string& key) {
-  std::lock_guard<std::mutex> lock(dataMutex);
-  if (timedDataVector.empty()) {
-    return{""};
-  }
-
-  for (const auto& timedData : timedDataVector) {
-    if (timedData.data && !timedData.data->empty()) {
-      for (const auto& pair : *timedData.data) {
-        if (pair.first == key) {
-          return{pair.second};
-        }
-      }
-    }
-  } 
-}
+#include "Dailyhub/Core/utility.hpp"
 
 uint32_t Utility::Integer(std::string str) {
   return static_cast<uint32_t>(std::atoi(str.c_str()));
@@ -163,7 +114,8 @@ std::string Utility::base64_decode(const std::string& input) {
 std::string Utility::readFilesSQL(const std::string& sqlFile) {
   std::ifstream file(sqlFile, std::ios::in | std::ios::binary);
   if (!file.is_open()) {
-      throw std::runtime_error("Erro ao abrir o SQL: " + sqlFile);
+    spdlog::error("Erro ao abrir o SQL: {}", sqlFile);
+    return{""};
   }
 
   std::stringstream buffer;

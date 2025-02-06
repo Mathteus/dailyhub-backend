@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include "dailyhub/application.hpp"
+#include "Dailyhub/application.hpp"
 
 int main(int argc, char** argv) {
 	const Dailyhub::Application app;

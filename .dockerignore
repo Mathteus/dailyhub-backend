@@ -1,9 +1,0 @@
-.github/
-build/
-build-line/
-database/
-.gitignore
-Dockerfile
-.dockerignore
-README.md
-docker-compose.yml

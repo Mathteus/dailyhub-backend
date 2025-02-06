@@ -1,17 +1,18 @@
-#ifndef APPLICATION_HPP
-#define APPLICATION_HPP
+#ifndef DAILYHUB_APPLICATION_HPP
+#define DAILYHUB_APPLICATION_HPP
 #define CPPHTTPLIB_OPENSSL_SUPPORT
 
-#include "../core/database.hpp"
-#include "../core/server.hpp"
-#include "../core/utility.hpp"
-#include "../core/hash-password.hpp"
-#include "../core/httplib.h"
+#include <string>
+#include <nlohmann/json.hpp>
+
+#include "Core/database.hpp"
+#include "Core/server.hpp"
+#include "Core/utility.hpp"
+#include "Core/hash-password.hpp"
+#include "Core/httplib.h"
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include <thread>
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
 #include <sstream>
@@ -19,6 +20,7 @@
 #include <regex>
 #include <fstream>
 
+namespace Dailyhub {
 typedef struct {
   std::string name;
   std::string code;
@@ -34,8 +36,9 @@ namespace Dailyhub {
   };
 
   nlohmann::json Login_On_Database(std::string user, std::string password);
-  nlohmann::json Register_On_Database(std::string user, std::string password, std::string email);
-  nlohmann::json Send_Email(const User_Register_Email& user);
+  nlohmann::json Register_On_Database(nlohmann::json user);
+  void Send_Email(const User_Register_Email& user_json);
+};
 };
 
-#endif
+#endif // DAILYHUB_APPLICATION_HPP

@@ -1,4 +1,4 @@
-#include "server.hpp"
+#include "Dailyhub/Core/server.hpp"
 #include <cstdlib>
 
 crow::SimpleApp Servidor::app = NULL;
@@ -22,15 +22,9 @@ crow::response loginUser(const crow::request& req) {
 
 crow::response registerUser(const crow::request& req) {
   if (verifyKeyApi(req)) {
-    return crow::response(200, "Register My APP");
-  }
-
-  return crow::response(401);
-}
-
-crow::response sendEmail(const crow::request& req) {
-  if (verifyKeyApi(req)) {
-    return crow::response(200, "Register");
+    const nlohmann::json register_user = Dailyhub::Register_On_Database(nlohmann::json::parse(req.body));
+    const uint32_t code = Utility::Integer(register_user["status"]);
+    return crow::response(code, register_user["message"]);
   }
 
   return crow::response(401);

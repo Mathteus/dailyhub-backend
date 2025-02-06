@@ -1,12 +1,15 @@
-#ifndef SERVER_HPP
-#define SERVER_HPP
+#ifndef DAILYHUB_SERVER_HPP
+#define DAILYHUB_SERVER_HPP
 
 #include <crow.h>
 #include <cstdlib>
 #include <string>
 #include <future>
 #include <thread>
+#include "Dailyhub/application.hpp"
 
+namespace Dailyhub {
+namespace Core {
 class Servidor {
 private:
   static crow::SimpleApp app;
@@ -21,6 +24,8 @@ public:
 
   static void Start();
   static void Stop();
+};
+};
 };
 
 #endif

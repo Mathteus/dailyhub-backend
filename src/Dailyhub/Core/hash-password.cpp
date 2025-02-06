@@ -1,4 +1,4 @@
-#include "hash-password.hpp"
+#include "Dailyhub/Core/hash-password.hpp"
 #include <sodium.h>
 
 #define SALT_SIZE crypto_pwhash_SALTBYTES

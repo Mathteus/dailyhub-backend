@@ -1,4 +1,4 @@
-#include "application.hpp"
+#include "Dailyhub/application.hpp"
 
 std::string replaceTemplates(std::string html, const std::unordered_map<std::string, std::string>& replacements) {
   if (html.empty() || replacements.empty()) {
@@ -44,9 +44,10 @@ std::string readHTML(const std::string& filename, const std::unordered_map<std::
 }
 
 nlohmann::json Dailyhub::Login_On_Database(std::string user, std::string password) {
+
 }
 
-nlohmann::json Dailyhub::Send_Email(const User_Register_Email& user) {
+void Dailyhub::Send_Email(const User_Register_Email& user) {
   const auto authBearer = [](const std::string token) {
     return std::string("Bearer: " + token);
   };
@@ -80,32 +81,26 @@ nlohmann::json Dailyhub::Send_Email(const User_Register_Email& user) {
   }
 }
 
-nlohmann::json Dailyhub::Register_On_Database(std::string username, std::string password, std::string email) {
+nlohmann::json Dailyhub::Register_On_Database(nlohmann::json user_json) {
   try {
-    const auto [hash, salt]{PasswordHasher::to_hash_pass(password)};
-    std::stringstream ss{};
-    ss << "INSERT INTO users (hash, salt, username, email) VALUES ('" << hash << "', '" << salt << "', '" << username << "', '"  << email << "');";
-    
-    const auto response{DataBase::executeQuery(ss.str())};
+    const auto [hash, salt]{PasswordHasher::to_hash_pass(user_json["password"])};
+    auto response{DataBase::Register_User (hash, salt, user_json["username"], user_json["email"])};
     if (response.status) {
       spdlog::info("Usuário cadastrado com sucesso.");
-      DataBase::cleanResult(response.result);
       User_Register_Email user;
-      const std::string user_code = Utility::gerateString();
-      user.name = username;
-      user.code = user_code;
-      user.message = "";
-      user.email = email;
+      user.name = user_json["username"];
+      user.code = user_json["code"];
+      user.message = "Registro Dailyhub";
+      user.email = user_json["email"];
       Send_Email(user);
-      Utility::useTokenUser({{email, user_code}});
       return {
-        {"status", 200},
+        {"status", 201},
         {"message", ""}
       };
     }
-    spdlog::error("Erro ao cadastrar usuário. ");
+    spdlog::error("Erro ao cadastrar usuário: {}", response.error);
     return {
-      {"status", 200},
+      {"status", 400},
       {"message", response.error}
     };
   } catch (const std::exception& e) {
@@ -117,25 +112,8 @@ nlohmann::json Dailyhub::Register_On_Database(std::string username, std::string 
   }
 }
 
-bool Verify_Code_From_Email(const std::string& code) {
-  try {
-    if (Utility::getTokerrUser() == code) {
-      return true;
-    }
-
-    return false;
-  } catch (const std::exception& e) {
-    spdlog::error("Error verificando código: {}", e.what());
-    return false;
-  }
-}
-
 Dailyhub::Application::Application() {
   if (DataBase::connect()) {
-    std::string sqlFile{Utility::readFilesSQL("../database/nanoid")};
-    DataBase::executeQuery(sqlFile);
-    sqlFile = Utility::readFilesSQL("../database/commands");
-    DataBase::executeQuery(sqlFile);
     Servidor::Start();
   }
 }
