@@ -1,5 +1,7 @@
 #include "Dailyhub/application.hpp"
 
+using namespace Dailyhub::Core;
+
 std::string replaceTemplates(std::string html, const std::unordered_map<std::string, std::string>& replacements) {
   if (html.empty() || replacements.empty()) {
     return "";
@@ -82,9 +84,17 @@ void Dailyhub::Send_Email(const User_Register_Email& user) {
 }
 
 nlohmann::json Dailyhub::Register_On_Database(nlohmann::json user_json) {
+  if (Utility::IsValidEmail(user_json["email"]) && Utility::ContainsSymbols(user_json["username"])) {
+    return {
+      {"status", 400},
+      {"message", "nome ou email estão em formato invalido!"}
+    };
+  }
+
+  nlohmann::json res_json;
   try {
     const auto [hash, salt]{PasswordHasher::to_hash_pass(user_json["password"])};
-    auto response{DataBase::Register_User (hash, salt, user_json["username"], user_json["email"])};
+    auto response{DataBase::Register_User(hash, salt, user_json["username"], user_json["email"])};
     if (response.status) {
       spdlog::info("Usuário cadastrado com sucesso.");
       User_Register_Email user;
@@ -99,26 +109,28 @@ nlohmann::json Dailyhub::Register_On_Database(nlohmann::json user_json) {
       };
     }
     spdlog::error("Erro ao cadastrar usuário: {}", response.error);
-    return {
+    res_json = {
       {"status", 400},
       {"message", response.error}
     };
   } catch (const std::exception& e) {
     spdlog::error("Error hashing password: {}", e.what());
-    return {
+    res_json = {
       {"status", 500},
       {"message", e.what()}
     };
   }
+
+  return res_json;
 }
 
 Dailyhub::Application::Application() {
-  if (DataBase::connect()) {
-    Servidor::Start();
+  if (Dailyhub::Core::DataBase::connect()) {
+    Dailyhub::Core::Servidor::Start();
   }
 }
 
 Dailyhub::Application::~Application() {
-  Servidor::Stop();
-  DataBase::close();
+  Dailyhub::Core::Servidor::Stop();
+  Dailyhub::Core::DataBase::close();
 }

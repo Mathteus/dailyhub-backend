@@ -20,16 +20,18 @@ set(CMAKE_CXX_FLAGS_STATIC "${CMAKE_CXX_FLAGS_STATIC} -static")
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	add_compile_options(-Wall -Wextra -Wpedantic)
-	add_compile_options(-fno-omit-frame-pointer)
+  add_compile_options(-Wall -Wextra -Wpedantic)
+  add_compile_options(-fno-omit-frame-pointer)
 endif()
 
 # LIBS Settings
-set(POSTGRESQL_INCLUDE_DIR "/usr/include/postgresql")
+set(DOTENV_INCLUDE "/usr/local/include/cpp-dotenv/")
+set(POSTGRESQL_INCLUDE_DIR "/usr/include/postgresql/")
 set(SODIUM_SOURCE "/usr/include")
 set(SODIUM_LIBRARIES "/usr/lib/x86_64-linux-gnu/libsodium.a")
 include_directories(${POSTGRESQL_INCLUDE_DIR})
 include_directories(${SODIUM_SOURCE})
+include_directories(${DOTENV_INCLUDE})
 
 # SOURCE
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR})
@@ -59,7 +61,7 @@ target_link_libraries(
   OpenSSL::SSL
   OpenSSL::Crypto
   jwt-cpp::jwt-cpp
-	date::date
+  date::date
   ${CURL_LIBRARIES}
   ${PostgreSQL_LIBRARIES}
   ${SODIUM_LIBRARIES}

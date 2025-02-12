@@ -4,7 +4,7 @@
 #define SALT_SIZE crypto_pwhash_SALTBYTES
 #define HASH_SIZE crypto_pwhash_BYTES_MAX
 
-std::tuple<std::string, std::string> PasswordHasher::to_hash_pass(const std::string& password) {
+std::tuple<std::string, std::string> Dailyhub::Core::PasswordHasher::to_hash_pass(const std::string& password) {
   if (sodium_init() == -1) {
     return {"", ""};
   }
@@ -31,7 +31,7 @@ std::tuple<std::string, std::string> PasswordHasher::to_hash_pass(const std::str
   return {std::string(ss_hash.str()), std::string(ss_salt.str())};
 }
 
-bool PasswordHasher::verify_password(const std::string& password, const std::string& stored_hash, const std::string& stored_salt) {
+bool Dailyhub::Core::PasswordHasher::verify_password(const std::string& password, const std::string& stored_hash, const std::string& stored_salt) {
   if (sodium_init() == -1) {
     return false;
   }

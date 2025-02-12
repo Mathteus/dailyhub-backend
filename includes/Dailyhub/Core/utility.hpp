@@ -16,7 +16,7 @@
 #include <mutex>
 #include <algorithm>
 #include <spdlog/spdlog.h>
-
+#include <regex>
 
 namespace Dailyhub {
 namespace Core {
@@ -36,6 +36,8 @@ namespace Utility {
   std::string base64_encode(const std::string& input);
   std::string base64_decode(const std::string& input);
   std::string readFilesSQL(const std::string& sqlFile);
+  bool IsValidEmail(const std::string& email);
+  bool ContainsSymbols(const std::string& str);
 };
 };
 };

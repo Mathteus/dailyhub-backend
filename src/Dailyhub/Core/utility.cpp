@@ -1,28 +1,28 @@
 #include "Dailyhub/Core/utility.hpp"
 
-uint32_t Utility::Integer(std::string str) {
+uint32_t Dailyhub::Core::Utility::Integer(std::string str) {
   return static_cast<uint32_t>(std::atoi(str.c_str()));
 }
 
-std::string Utility::String(uint32_t num) {
+std::string Dailyhub::Core::Utility::String(uint32_t num) {
   return std::to_string(num);
 }
 
-int Utility::random(int min, int max) {
+int Dailyhub::Core::Utility::random(int min, int max) {
   std::random_device dev;
   std::mt19937 rng(dev());
   std::uniform_int_distribution<std::mt19937::result_type> dist6(min, max);
   return dist6(rng);
 }
 
-int Utility::random(int max) {
+int Dailyhub::Core::Utility::random(int max) {
   std::random_device dev;
   std::mt19937 rng(dev());
   std::uniform_int_distribution<std::mt19937::result_type> dist6(0, max);
   return dist6(rng);
 }
 
-std::string Utility::gerateString() {
+std::string Dailyhub::Core::Utility::gerateString() {
   std::string caracters = "0123654789MNBVCXZLKJHGFDSAPOIUYTREWQ";
   const size_t lenght = 6;
   std::string randomString;
@@ -33,18 +33,13 @@ std::string Utility::gerateString() {
   return randomString;
 }
 
-std::string Utility::gerateCode(int seed) {
+std::string Dailyhub::Core::Utility::gerateCode(int seed) {
   std::mt19937 gen(seed);
   std::uniform_int_distribution dis(0, 999999);
   return std::to_string(dis(gen));
 }
 
-time_t Utility::Date() {
-  time_t timestamp;
-  return timestamp;
-}
-
-std::string Utility::base64_encode(const std::string& input) {
+std::string Dailyhub::Core::Utility::base64_encode(const std::string& input) {
   static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   std::string encoded;
   int i = 0;
@@ -74,7 +69,7 @@ std::string Utility::base64_encode(const std::string& input) {
   return encoded;
 }
 
-std::string Utility::base64_decode(const std::string& input) {
+std::string Dailyhub::Core::Utility::base64_decode(const std::string& input) {
   static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
   std::string decoded;
   int i = 0;
@@ -111,7 +106,27 @@ std::string Utility::base64_decode(const std::string& input) {
   return decoded;
 }
 
-std::string Utility::readFilesSQL(const std::string& sqlFile) {
+bool Dailyhub::Core::Utility::IsValidEmail(const std::string& email) {
+  const std::regex pattern(R"([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})");
+  return !std::regex_match(email, pattern);
+}
+
+bool Dailyhub::Core::Utility::ContainsSymbols(const std::string& str) {
+  for (char c : str) {
+    if (!isalnum(c)) {
+      if (!isspace(c)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+bool Dailyhub::Core::Utility::IsNumber(std::string& str) {
+  return isalnum(str);
+}
+
+std::string Dailyhub::Core::Utility::readFilesSQL(const std::string& sqlFile) {
   std::ifstream file(sqlFile, std::ios::in | std::ios::binary);
   if (!file.is_open()) {
     spdlog::error("Erro ao abrir o SQL: {}", sqlFile);

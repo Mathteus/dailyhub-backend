@@ -1,8 +1,8 @@
 #include "Dailyhub/Core/auth.hpp"
 
-static const std::string jwtSecret{std::getenv("JWT_SECRET")};
+const std::string jwtSecret{std::getenv("JWT_SECRET")};
 
-std::string AuthManager::generateJWT(const std::string& username) {
+std::string Dailyhub::Core::AuthManager::generateJWT(const std::string& username) {
   auto token = jwt::create()
     .set_issuer("auth0")
     .set_type("JWS")
@@ -14,7 +14,7 @@ std::string AuthManager::generateJWT(const std::string& username) {
   return token;
 }
 
-Auth_Response AuthManager::verifyJWT(const std::string& token) {
+Dailyhub::Core::Auth_Response Dailyhub::Core::AuthManager::verifyJWT(const std::string& token) {
   Auth_Response res;
   res.success = false;
   res.username = "";

@@ -1,37 +1,34 @@
 #include "Dailyhub/Core/database.hpp"
 
-PGconn* DataBase::conn_ = nullptr;
-enum Tables {
-  users,
-  kanban,
-  finance,
-  blog,
-};
+PGconn* Dailyhub::Core::DataBase::conn_ = nullptr;
 
-
-
-
-bool DataBase::connect() {
+bool Dailyhub::Core::DataBase::connect() {
   std::string url{std::getenv("URL_POSTGRES")};
   if (isConnected()) {
     spdlog::warn("Conexão já está estabelecida.");
     return true;
   }
 
-  conn_ = PQconnectdb(url.c_str());
-  if (PQstatus(conn_) == CONNECTION_OK) {
-    spdlog::info("Conexão com o banco de dados estabelecida.");
-    initWithSQLFiles();
-    return true;
-  } else {
-    spdlog::error("Falha ao conectar no banco de dados: {}", PQerrorMessage(conn_));
-    PQfinish(conn_);
-    conn_ = nullptr;
-    return false;
+  bool response = false;
+  try {
+    conn_ = PQconnectdb(url.c_str());
+    if (PQstatus(conn_) == CONNECTION_OK) {
+      spdlog::info("Conexão com o banco de dados estabelecida.");
+      initWithSQLFiles();
+      response = true;
+    } else {
+      spdlog::error("Falha ao conectar no banco de dados: {}", PQerrorMessage(conn_));
+      PQfinish(conn_);
+      conn_ = nullptr;
+    }
+  } catch (std::exception& e) {
+    spdlog::error("Falha ao conectar no banco de dados: {}", e.what ());
   }
+
+  return response;
 }
 
-void DataBase::close() {
+void Dailyhub::Core::DataBase::close() {
   if (conn_ != nullptr) {
     PQfinish(conn_);
     conn_ = nullptr;
@@ -39,11 +36,14 @@ void DataBase::close() {
   }
 }
 
-bool DataBase::isConnected() {
+bool Dailyhub::Core::DataBase::isConnected() {
   return conn_ != nullptr && PQstatus(conn_) == CONNECTION_OK;
 }
 
-DataBase::Inner_Response DataBase::executeQuery(const std::string& query) {
+Dailyhub::Core::DataBase::Inner_Response Dailyhub::Core::DataBase::executeQuery(const std::string& query) {
+  const Oid params[] = {23, 45};
+  const char* stmtName = "get_user_by_id";
+  PGresult* prepareResult = PQprepare(conn_, stmtName, query.c_str(), 1, params);
   DataBase::Inner_Response response;
   if (!isConnected()) {
     std::string error{"Não há conexão com o banco de dados para executar a query."};
@@ -69,46 +69,14 @@ DataBase::Inner_Response DataBase::executeQuery(const std::string& query) {
   return response;
 }
 
-void DataBase::initWithSQLFiles() {
+void Dailyhub::Core::DataBase::initWithSQLFiles() {
   std::string sqlFile{Utility::readFilesSQL("../database/nanoid")};
   DataBase::executeQuery(sqlFile);
   sqlFile = Utility::readFilesSQL("../database/commands");
   DataBase::executeQuery(sqlFile);
 }
 
-void DataBase::DisplayQueryResult(PGresult* res) {
-  if (PQntuples(res) == 0) {
-    std::cout << "No results found.\n";
-    return;
-  }
-
-  int cols = PQnfields(res);
-  for (int col = 0; col < cols; ++col) {
-    std::cout << std::setw(15) << std::left << PQfname(res, col);
-  }
-
-  std::cout << '\n';
-  for (int col = 0; col < cols; ++col) {
-    std::cout << std::setw(15) << std::left << "----------------";
-  }
-
-  std::cout << '\n';
-
-  int rows = PQntuples(res);
-  for (int row = 0; row < rows; ++row) {
-    for (int col = 0; col < cols; ++col) {
-      if (PQgetisnull(res, row, col)) {
-        std::cout << std::setw(15) << std::left << "(null)";
-        } else {
-        std::cout << std::setw(15) << std::left << PQgetvalue(res, row, col);
-      }
-    }
-    std::cout << '\n';
-  }
-  PQclear(res);
-}
-
-nlohmann::json DataBase::resultToJson(PGresult* res) {
+nlohmann::json Dailyhub::Core::DataBase::resultToJson(PGresult* res) {
   nlohmann::json j;
   if (PQntuples(res) == 0) {
     PQclear(res);
@@ -204,11 +172,11 @@ std::string sanitizeString(const std::string& input) {
         "information_schema",
         "TABLE_",       // Padrão para tabelas
         "table_",
-         "OR",       // Operador booleano OR
+        "OR",       // Operador booleano OR
         "or",
-          "AND",       // Operador booleano AND
+        "AND",       // Operador booleano AND
         "and",
-          "LIKE",       // Cláusula LIKE
+        "LIKE",       // Cláusula LIKE
         "like"
     };
 
@@ -232,36 +200,8 @@ std::string sanitizeString(const std::string& input) {
     return sanitized;
 }
 
-// template <typename TypeData> ResponseDatabase Generic(TypeData data) {
-//     ResponseDatabase res;
-//     res.json = {{}};
-//     res.status = false;
-//     if (user.empty() || token.empty()) {
-//         res.error = "Dados estão vazios";
-//         return res;
-//     }
 
-//     sanitizeString(user);
-//     sanitizeString(token);
-
-//     std::stringstream ss{};
-//     ss << "UPDATE user SET TOKEN = '" << token << "' WHERE username = '" << user << "';";
-//     auto response_query{DataBase::executeQuery(ss.str())};
-//     if (response_query.status) {
-//         ResponseDatabase response;
-//         response.status = true;
-//         response.json = DataBase::resultToJson(response_query.result);
-//         res.error = "";
-//         return response;
-//     }
-
-//     res.error = response_query.error;
-//     return res;
-// }
-
-
-
-ResponseDatabase DataBase::Register_User(const std::string& hash, const std::string& salt, const std::string& username, const std::string& email) {
+Dailyhub::Core::ResponseDatabase Dailyhub::Core::DataBase::Register_User(const std::string& hash, const std::string& salt, const std::string& username, const std::string& email) {
     ResponseDatabase res;
     res.json = {{}};
     res.status = false;
@@ -291,7 +231,7 @@ ResponseDatabase DataBase::Register_User(const std::string& hash, const std::str
     return res;
 }
 
-ResponseDatabase DataBase::Login_user(const std::string& user, const std::string& token) {
+Dailyhub::Core::ResponseDatabase Dailyhub::Core::DataBase::Login_user(const std::string& user, const std::string& token) {
     ResponseDatabase res;
     res.json = {{}};
     res.status = false;

@@ -12,8 +12,8 @@
 #include <memory>
 #include <nlohmann/json.hpp>
 #include <regex>
-#include <cstdlib> // Para std::getenv
-#include <sstream> // Para std::ostringstream
+#include <cstdlib>
+#include <sstream>
 
 namespace Dailyhub {
 namespace Core {
@@ -32,7 +32,6 @@ private:
   } Inner_Response;
 
   static PGconn* conn_;
-  static void DisplayQueryResult(PGresult* res);
   static std::string sanitizeString(const std::string& input);
   static Inner_Response executeQuery(const std::string& query);
   static nlohmann::json resultToJson(PGresult* res);

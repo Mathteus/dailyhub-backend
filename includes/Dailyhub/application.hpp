@@ -21,24 +21,22 @@
 #include <fstream>
 
 namespace Dailyhub {
-typedef struct {
-  std::string name;
-  std::string code;
-  std::string message;
-  std::string email;
-} User_Register_Email;
-
-namespace Dailyhub {
-  class Application {
+ class Application {
   public: 
     Application();
     ~Application();
   };
 
+  typedef struct {
+    std::string name;
+    std::string code;
+    std::string message;
+    std::string email;
+  } User_Register_Email;
+
   nlohmann::json Login_On_Database(std::string user, std::string password);
   nlohmann::json Register_On_Database(nlohmann::json user);
   void Send_Email(const User_Register_Email& user_json);
-};
 };
 
 #endif // DAILYHUB_APPLICATION_HPP
