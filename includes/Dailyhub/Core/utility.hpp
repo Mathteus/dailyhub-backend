@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <spdlog/spdlog.h>
 #include <regex>
+#include "date/date.h"
 
 namespace Dailyhub {
 namespace Core {
@@ -30,7 +31,8 @@ namespace Utility {
   std::string String(uint32_t num);
   int random(int min, int max);
   int random(int max);
-  std::string gerateString();
+  std::string gerateString(const uint8_t lenght);
+  const char* gerateStringC(const uint8_t lenght);
   std::string gerateCode(int seed);
   time_t Date();
   std::string base64_encode(const std::string& input);
@@ -38,6 +40,11 @@ namespace Utility {
   std::string readFilesSQL(const std::string& sqlFile);
   bool IsValidEmail(const std::string& email);
   bool ContainsSymbols(const std::string& str);
+  std::string bytes_to_hex_string(const std::vector<unsigned char>& bytes);
+  std::string time_point_to_string(const std::chrono::system_clock::time_point& tp);
+  std::chrono::system_clock::time_point parse_date_time(const std::string& time_str);
+  std::string replaceTemplates(std::string html, const std::unordered_map<std::string, std::string>& replacements);
+  std::string readHTML(const std::string& filename, const std::unordered_map<std::string, std::string>& replacements);
 };
 };
 };

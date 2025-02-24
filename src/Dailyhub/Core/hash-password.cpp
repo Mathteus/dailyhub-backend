@@ -1,65 +1,32 @@
 #include "Dailyhub/Core/hash-password.hpp"
-#include <sodium.h>
+#include <bcrypt/BCrypt.hpp>
 
-#define SALT_SIZE crypto_pwhash_SALTBYTES
-#define HASH_SIZE crypto_pwhash_BYTES_MAX
+using Response = Dailyhub::Core::Errors::ResponseString;
 
-std::tuple<std::string, std::string> Dailyhub::Core::PasswordHasher::to_hash_pass(const std::string& password) {
-  if (sodium_init() == -1) {
-    return {"", ""};
-  }
+Response Dailyhub::Core::PasswordHasher::to_hash_pass(const std::string& password) {
+    Response res;
+    char salt[BCRYPT_HASHSIZE];
+    if (bcrypt_gensalt(12, salt) != 0) {
+        res.success = false;
+        res.error = "Erro ao gerar o salt Bcrypt.";
+        res.data = std::nullopt;
+        return res;
+    }
 
-  unsigned char salt[SALT_SIZE];
-  unsigned char hash[HASH_SIZE];
-  randombytes_buf(salt, SALT_SIZE);
+    char hash[BCRYPT_HASHSIZE];
+    if (bcrypt_hashpw(password.c_str(), salt, hash) != 0) {
+        res.success = false;
+        res.error = "Erro ao gerar o hash Bcrypt.";
+        res.data = std::nullopt;
+        return res;
+    }
 
-  if (crypto_pwhash(hash, HASH_SIZE, password.c_str(), password.length(), salt, crypto_pwhash_OPSLIMIT_SENSITIVE, crypto_pwhash_MEMLIMIT_SENSITIVE, crypto_pwhash_ALG_DEFAULT) != 0)
-  {
-    return {"", ""};
-  }
-
-  std::stringstream ss_salt;
-  for (int i = 0; i < SALT_SIZE; ++i) {
-    ss_salt << std::hex << std::setw(2) << std::setfill('0') << (int)salt[i];
-  }
-
-  std::stringstream ss_hash;
-  for (int i = 0; i < HASH_SIZE; ++i) {
-    ss_hash << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
-  }
-
-  return {std::string(ss_hash.str()), std::string(ss_salt.str())};
+    res.success = true;
+    res.data = hash;
+    res.error = std::nullopt;
+    return res;
 }
 
-bool Dailyhub::Core::PasswordHasher::verify_password(const std::string& password, const std::string& stored_hash, const std::string& stored_salt) {
-  if (sodium_init() == -1) {
-    return false;
-  }
-
-  unsigned char salt[SALT_SIZE];
-  unsigned char hash[HASH_SIZE];
-   
-  if (stored_salt.length() != SALT_SIZE*2) {
-    return false;
-  }
-
-  if (stored_hash.length() != HASH_SIZE*2) {
-    return false;
-  }
-
-  for (size_t i = 0; i < stored_salt.length(); i += 2) {
-    std::string byteString = stored_salt.substr(i, 2);
-    salt[i/2] = (unsigned char)std::stoi(byteString, nullptr, 16);
-  }
-
-  if (crypto_pwhash(hash, HASH_SIZE, password.c_str(), password.length(), salt, crypto_pwhash_OPSLIMIT_SENSITIVE, crypto_pwhash_MEMLIMIT_SENSITIVE, crypto_pwhash_ALG_DEFAULT) != 0) {
-    return false;
-  }
-
-  std::stringstream ss_hash;
-  for (int i = 0; i < HASH_SIZE; ++i) {
-    ss_hash << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
-  }
-   
-  return ss_hash.str() == stored_hash;
+bool Dailyhub::Core::PasswordHasher::verify_password(const std::string& password, const std::string& stored_hash) {
+    return static_cast<bool>(BCrypt::validatePassword(password, stored_hash));
 }

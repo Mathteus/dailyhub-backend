@@ -16,33 +16,45 @@ find_package(date REQUIRED)
 # C++ Settings
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS_STATIC "${CMAKE_CXX_FLAGS_STATIC} -static")
+set(CMAKE_CXX_FLAGS_STATIC "${CMAKE_CXX_FLAGS_STATIC} -static -static-libgcc -static-libstdc++")
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
-  add_compile_options(-fno-omit-frame-pointer)
+	add_compile_options(-Wall -Wextra -Wpedantic)
+	add_compile_options(-fno-omit-frame-pointer)
 endif()
+
+if(${CMAKE_BUILD_TYPE} MATCHES Debug)
+	set(CMAKE_CXX_FLAGS "-fsanitize=address -fsanitize=undefined -fsanitize=bounds -fsanitize=leak -g")
+	set(CMAKE_C_FLAGS "-fsanitize=address -fsanitize=undefined -fsanitize=bounds -fsanitize=leak -g")
+	set(CMAKE_EXE_LINKER_FLAGS "-fsanitize=address -fsanitize=undefined -fsanitize=bounds -fsanitize=leak")
+	set(CMAKE_MODULE_LINKER_FLAGS "-fsanitize=address -fsanitize=undefined -fsanitize=bounds -fsanitize=leak")
+	# set(CMAKE_CXX_FLAGS "-fsanitize=thread -fsanitize=bounds -g")
+	# set(CMAKE_C_FLAGS "-fsanitize=thread -fsanitize=bounds  -g")
+	# set(CMAKE_EXE_LINKER_FLAGS "-fsanitize=thread -fsanitize=bounds")
+	# set(CMAKE_MODULE_LINKER_FLAGS "-fsanitize=thread -fsanitize=bounds")
+endif(${CMAKE_BUILD_TYPE} MATCHES Debug)
 
 # LIBS Settings
 set(DOTENV_INCLUDE "/usr/local/include/cpp-dotenv/")
 set(POSTGRESQL_INCLUDE_DIR "/usr/include/postgresql/")
-set(SODIUM_SOURCE "/usr/include")
-set(SODIUM_LIBRARIES "/usr/lib/x86_64-linux-gnu/libsodium.a")
+set(BCRYPT_SOURCE "/usr/include/bcrypt/")
+set(BCRYPT_LIBRARIES -lbcrypt)
+set(DOTENV_HEADER "/usr/local/include/laserpants/dotenv-0.9.3/")
 include_directories(${POSTGRESQL_INCLUDE_DIR})
-include_directories(${SODIUM_SOURCE})
+include_directories(${BCRYPT_SOURCE})
 include_directories(${DOTENV_INCLUDE})
+include_directories(${DOTENV_HEADER})
 
 # SOURCE
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR})
 set(INCLUDE_DIR ${SOURCE_DIR}/includes)
 set(SRC_DIR ${SOURCE_DIR}/src)
-set(TEST_DIR ${SOURCE_DIR}/test)
+set(TEST_DIR ${SOURCE_DIR}/Tests)
 
 file(GLOB_RECURSE HEADERS "${INCLUDE_DIR}/*.hpp")
 file(GLOB_RECURSE SOURCE "${SRC_DIR}/*.cpp")
 file(GLOB_RECURSE TESTS "${TEST_DIR}/*.hpp" "${TEST_DIR}/*.cpp")
-
 include_directories(${INCLUDE_DIR})
 
 list(APPEND SRC ${HEADERS})
@@ -64,5 +76,5 @@ target_link_libraries(
   date::date
   ${CURL_LIBRARIES}
   ${PostgreSQL_LIBRARIES}
-  ${SODIUM_LIBRARIES}
+	${BCRYPT_LIBRARIES}
 )

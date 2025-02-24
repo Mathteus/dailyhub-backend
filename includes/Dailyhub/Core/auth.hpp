@@ -9,17 +9,13 @@
 #include <sstream>
 #include <spdlog/spdlog.h>
 #include <nlohmann/json.hpp>
+#include "Dailyhub/Core/error_handler.hpp"
 
 namespace Dailyhub {
 namespace Core {
-typedef struct {
-  bool success;
-  std::string username;
-} Auth_Response;
-
 namespace AuthManager {
-  std::string generateJWT(const std::string& username);
-  Auth_Response verifyJWT(const std::string& token);
+    std::string generateJWT(const std::string& username);
+    Dailyhub::Core::Errors::ResponseString verifyJWT(const std::string& token);
 };
 };
 };

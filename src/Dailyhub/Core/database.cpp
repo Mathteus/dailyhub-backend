@@ -1,28 +1,36 @@
 #include "Dailyhub/Core/database.hpp"
+#define TEST
+
+#ifdef TEST
+    #define URL_DATABASE "URL_POSTGRES_TEST"
+#else
+    #define URL_DATABASE "URL_POSTGRES"
+#endif
 
 PGconn* Dailyhub::Core::DataBase::conn_ = nullptr;
 
 bool Dailyhub::Core::DataBase::connect() {
-  std::string url{std::getenv("URL_POSTGRES")};
   if (isConnected()) {
-    spdlog::warn("Conexão já está estabelecida.");
+    spdlog::warn("Conexão já está estabelecida.\n");
     return true;
   }
 
-  bool response = false;
+  std::string urlConnection{Dailyhub::Core::DotEnv::get(URL_DATABASE, "postgres://postgres:abacaxi@127.0.0.1:5432/tests")};
+  bool response{false};
+
   try {
-    conn_ = PQconnectdb(url.c_str());
+    conn_ = PQconnectdb(urlConnection.c_str());
     if (PQstatus(conn_) == CONNECTION_OK) {
-      spdlog::info("Conexão com o banco de dados estabelecida.");
+      spdlog::info("Conexão com o banco de dados estabelecida.\n");
       initWithSQLFiles();
       response = true;
     } else {
-      spdlog::error("Falha ao conectar no banco de dados: {}", PQerrorMessage(conn_));
+      spdlog::error("Falha ao conectar no banco de dados: {}\n", PQerrorMessage(conn_));
       PQfinish(conn_);
       conn_ = nullptr;
     }
   } catch (std::exception& e) {
-    spdlog::error("Falha ao conectar no banco de dados: {}", e.what ());
+    spdlog::error("Falha ao conectar no banco de dados: {}\n", e.what ());
   }
 
   return response;
@@ -32,7 +40,7 @@ void Dailyhub::Core::DataBase::close() {
   if (conn_ != nullptr) {
     PQfinish(conn_);
     conn_ = nullptr;
-    spdlog::info("Conexão com o banco de dados fechada.");
+    spdlog::info("Conexão com o banco de dados fechada.\n");
   }
 }
 
@@ -40,69 +48,145 @@ bool Dailyhub::Core::DataBase::isConnected() {
   return conn_ != nullptr && PQstatus(conn_) == CONNECTION_OK;
 }
 
-Dailyhub::Core::DataBase::Inner_Response Dailyhub::Core::DataBase::executeQuery(const std::string& query) {
-  const Oid params[] = {23, 45};
-  const char* stmtName = "get_user_by_id";
-  PGresult* prepareResult = PQprepare(conn_, stmtName, query.c_str(), 1, params);
-  DataBase::Inner_Response response;
+Dailyhub::Core::DataBase::ResponsePGresult Dailyhub::Core::DataBase::executeQueryRaw(const std::string& query) {
+  DataBase::ResponsePGresult response;
   if (!isConnected()) {
-    std::string error{"Não há conexão com o banco de dados para executar a query."};
+    const char* error{"Não há conexão com o banco de dados para executar a query.\n"};
     spdlog::error(error);
     response.error = error;
-    response.status = false;
+    response.success = false;
+    response.data = std::nullopt;
     return response;
   }
 
   PGresult* res = PQexec(conn_, query.c_str());
   if(PQresultStatus(res) != PGRES_TUPLES_OK && PQresultStatus(res) != PGRES_COMMAND_OK) {
     std::string error{PQerrorMessage(conn_)};
-    spdlog::error("Erro ao executar a query: {}", error);
+    spdlog::error("Erro ao executar a query: {}\n", error);
     PQclear(res);
-    response.status = false;
+    response.success = false;
     response.error = error;
+    response.data = std::nullopt;
     return response;
   }
 
-  response.status = true;
-  response.result = res;
-  response.error = "";
+  response.success = true;
+  response.data = res;
+  response.error = std::nullopt;
   return response;
 }
 
+Dailyhub::Core::Errors::ResponseBoolean Dailyhub::Core::DataBase::execQuery(const char* query, Dailyhub::Core::DataBase::ParamsQuery params) {
+  Dailyhub::Core::Errors::ResponseBoolean response;
+  if (!DataBase::isConnected()) {
+    const char* error{"Não há conexão com o banco de dados para executar a query.\n"};
+    spdlog::error(error);
+    response.error = error;
+    response.success = false;
+    response.data = std::nullopt;
+    return response;
+  }
+
+  const char* identifier = static_cast<const char*>(Dailyhub::Core::Utility::gerateStringC(10));
+  PGresult* result = PQprepare(DataBase::conn_, identifier, query, params.colums, NULL);
+  if (PQresultStatus(result) != PGRES_COMMAND_OK) {
+    std::string error{PQerrorMessage(DataBase::conn_)};
+    spdlog::error("Erro ao preparar a consulta: {}\n", error);
+    PQclear(result);
+    response.success = false;
+    response.error = error;
+    response.data = std::nullopt;
+    return response;
+  }
+
+  result = PQexecPrepared(DataBase::conn_, identifier, params.colums, params.params, NULL, NULL, 0);
+  if (PQresultStatus(result) != PGRES_COMMAND_OK) {
+    std::string error{PQerrorMessage(DataBase::conn_)};
+    spdlog::error("Erro ao preparar a consulta: {}\n", error);
+    PQclear(result);
+    response.success = false;
+    response.error = error;
+    response.data = std::nullopt;
+    PQclear(result);
+    return response;
+  }
+
+  response.success = true;
+  response.error = std::nullopt;
+  response.data = true;
+  PQclear(result);
+  return response;
+}
+
+Dailyhub::Core::DataBase::ResponseJson Dailyhub::Core::DataBase::Select(const char* query, Dailyhub::Core::DataBase::ParamsQuery params) {
+    DataBase::ResponseJson response;
+    const char* identifier = static_cast<const char*>(Dailyhub::Core::Utility::gerateStringC(10));
+    PGresult* result = PQprepare(DataBase::conn_, identifier, query, params.colums, NULL);
+    if (PQresultStatus(result) != PGRES_COMMAND_OK) {
+        std::string error{PQerrorMessage(DataBase::conn_)};
+        spdlog::error("Erro ao preparar a consulta: {}\n", error);
+        PQclear(result);
+        response.success = false;
+        response.error = error;
+        response.data = std::nullopt;
+        return response;
+    }
+
+    result = PQexecPrepared(DataBase::conn_, identifier, params.colums, params.params, NULL, NULL, 0);
+    if (PQresultStatus(result) == PGRES_TUPLES_OK) {
+        auto j{DataBase::resultToJson(result)};
+        response.success = true;
+        response.error = std::nullopt;
+        response.data = j;
+    } else {
+        const char* error{PQerrorMessage(DataBase::conn_)};
+        spdlog::error("Erro ao preparar a consulta: {}\n", error);
+        response.success = false;
+        response.error = error;
+        response.data = std::nullopt;
+        delete error;
+    }
+
+    delete identifier;
+    PQclear(result);
+    return response;
+}
+
 void Dailyhub::Core::DataBase::initWithSQLFiles() {
-  std::string sqlFile{Utility::readFilesSQL("../database/nanoid")};
-  DataBase::executeQuery(sqlFile);
-  sqlFile = Utility::readFilesSQL("../database/commands");
-  DataBase::executeQuery(sqlFile);
+    std::string sqlFile{Utility::readFilesSQL("../database/nanoid")};
+    DataBase::executeQueryRaw(sqlFile);
+    sqlFile = Utility::readFilesSQL("../database/commands");
+    DataBase::executeQueryRaw(sqlFile);
 }
 
 nlohmann::json Dailyhub::Core::DataBase::resultToJson(PGresult* res) {
-  nlohmann::json j;
-  if (PQntuples(res) == 0) {
+    nlohmann::json j{{}};
+    if (PQntuples(res) == 0) {
+        PQclear(res);
+        return j;
+    }
+
+    size_t cols{static_cast<size_t>(PQnfields(res))};
+    std::vector<std::string> column_names;
+    for (size_t col = 0; col < cols; ++col) {
+        column_names.push_back(PQfname(res,col));
+    }
+
+    size_t rows{static_cast<size_t>(PQntuples(res))};
+    for (size_t row = 0; row < rows; ++row) {
+        nlohmann::json row_json;
+        for (size_t col = 0; col < column_names.size(); ++col) {
+            if (PQgetisnull(res, row, col)) {
+                row_json[column_names[col]] = nullptr;
+            } else {
+               row_json[column_names[col]] = PQgetvalue(res, row, col);
+            }
+        }
+      j.push_back(row_json);
+    }
+
     PQclear(res);
     return j;
-  }
-    
-  int cols = PQnfields(res);
-  std::vector<std::string> column_names;
-  for (int col = 0; col < cols; ++col) {
-    column_names.push_back(PQfname(res,col));
-  }
-    
-  int rows = PQntuples(res);
-  for (int row = 0; row < rows; ++row) {
-    nlohmann::json row_json;
-    for (size_t col = 0; col < column_names.size(); ++col) {
-      if(PQgetisnull(res, row, col)){
-        row_json[column_names[col]] = nullptr;
-      } else {
-        row_json[column_names[col]] = PQgetvalue(res, row, col);
-      }
-    }
-    j.push_back(row_json);
-  }
-  PQclear(res);
-  return j;
 }
 
 std::string regexEscape(const std::string& input) {
@@ -188,6 +272,7 @@ std::string sanitizeString(const std::string& input) {
             patternStream << "|";
         }
     }
+
     patternStream << ")";
     std::regex blacklistRegex(patternStream.str(), std::regex_constants::icase);
     sanitized = std::regex_replace(sanitized, blacklistRegex, "");
@@ -198,62 +283,4 @@ std::string sanitizeString(const std::string& input) {
     }
 
     return sanitized;
-}
-
-
-Dailyhub::Core::ResponseDatabase Dailyhub::Core::DataBase::Register_User(const std::string& hash, const std::string& salt, const std::string& username, const std::string& email) {
-    ResponseDatabase res;
-    res.json = {{}};
-    res.status = false;
-    if (hash.empty() || salt.empty() || username.empty() || email.empty()) {
-        res.error = "Dados estão vazios";
-        return res;
-    }
-
-    sanitizeString(hash);
-    sanitizeString(salt);
-    sanitizeString(username);
-    sanitizeString(email);
-
-    std::stringstream ss{};
-    ss << "INSERT INTO users (hash, salt, username, email) VALUES ('" << hash << "', '" << salt << "', '" << username << "', '"  << email << "');";
-
-    auto response_query{DataBase::executeQuery(ss.str())};
-    if (response_query.status) {
-        ResponseDatabase response;
-        response.status = true;
-        response.json = DataBase::resultToJson(response_query.result);
-        res.error = "";
-        return response;
-    }
-
-    res.error = response_query.error;
-    return res;
-}
-
-Dailyhub::Core::ResponseDatabase Dailyhub::Core::DataBase::Login_user(const std::string& user, const std::string& token) {
-    ResponseDatabase res;
-    res.json = {{}};
-    res.status = false;
-    if (user.empty() || token.empty()) {
-        res.error = "Dados estão vazios";
-        return res;
-    }
-
-    sanitizeString(user);
-    sanitizeString(token);
-
-    std::stringstream ss{};
-    ss << "UPDATE user SET TOKEN = '" << token << "' WHERE username = '" << user << "';";
-    auto response_query{DataBase::executeQuery(ss.str())};
-    if (response_query.status) {
-        ResponseDatabase response;
-        response.status = true;
-        response.json = DataBase::resultToJson(response_query.result);
-        res.error = "";
-        return response;
-    }
-
-    res.error = response_query.error;
-    return res;
 }

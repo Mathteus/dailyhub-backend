@@ -10,6 +10,9 @@
 #include "Core/utility.hpp"
 #include "Core/hash-password.hpp"
 #include "Core/httplib.h"
+#include "Core/dotenv.hpp"
+#include "schemas.hpp"
+#include "users.hpp"
 
 #include <iostream>
 #include <string>
@@ -19,24 +22,18 @@
 #include <unordered_map>
 #include <regex>
 #include <fstream>
+#include <iomanip>
 
 namespace Dailyhub {
- class Application {
-  public: 
+class Application {
+public:
     Application();
     ~Application();
-  };
 
-  typedef struct {
-    std::string name;
-    std::string code;
-    std::string message;
-    std::string email;
-  } User_Register_Email;
-
-  nlohmann::json Login_On_Database(std::string user, std::string password);
-  nlohmann::json Register_On_Database(nlohmann::json user);
-  void Send_Email(const User_Register_Email& user_json);
+    static nlohmann::json Login(std::string user, std::string password);
+    static nlohmann::json Register(nlohmann::json user);
+    static void Send_Email(const Dailyhub::Schemas::Users::User_Register_Email& user_json);
+};
 };
 
 #endif // DAILYHUB_APPLICATION_HPP
