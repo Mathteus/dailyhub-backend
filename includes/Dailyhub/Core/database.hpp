@@ -41,7 +41,7 @@ public:
 
   static bool connect();
   static void close();
-  static bool isConnected();
+  static bool isConnected() const;
   static Dailyhub::Core::Errors::ResponseBoolean execQuery(const char* query, ParamsQuery params_query);
   static ResponseJson Select(const char* query, ParamsQuery params_query);
 };

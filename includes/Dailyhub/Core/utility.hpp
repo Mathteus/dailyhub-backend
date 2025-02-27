@@ -44,7 +44,7 @@ namespace Utility {
   std::string time_point_to_string(const std::chrono::system_clock::time_point& tp);
   std::chrono::system_clock::time_point parse_date_time(const std::string& time_str);
   std::string replaceTemplates(std::string html, const std::unordered_map<std::string, std::string>& replacements);
-  std::string readHTML(const std::string& filename, const std::unordered_map<std::string, std::string>& replacements);
+  std::string readFile(const std::string& filename, const std::unordered_map<std::string, std::string>& replacements);
 };
 };
 };

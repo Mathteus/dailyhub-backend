@@ -13,6 +13,7 @@
 #include "Core/dotenv.hpp"
 #include "schemas.hpp"
 #include "users.hpp"
+#include "routes.hpp"
 
 #include <iostream>
 #include <string>

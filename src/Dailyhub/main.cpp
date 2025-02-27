@@ -2,10 +2,11 @@
 #include "Dailyhub/application.hpp"
 
 int main() {
-    try {
-        const Dailyhub::Application app;
-    } catch(std::exception& e) {
-        spdlog::error(e.what());
-    }
+	try {
+		const Dailyhub::Application app;
+	} catch(std::exception& e) {
+		spdlog::error(e.what());
+		return EXIT_FAILURE;
+	}
 	return EXIT_SUCCESS;
 }

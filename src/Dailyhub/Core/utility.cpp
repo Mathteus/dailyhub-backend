@@ -5,18 +5,18 @@ uint32_t Dailyhub::Core::Utility::Integer(std::string str) {
   return static_cast<uint32_t>(std::atoi(str.c_str()));
 }
 
-std::string Dailyhub::Core::Utility::String(uint32_t num) {
+std::string Dailyhub::Core::Utility::String(int32_t num) {
   return std::to_string(num);
 }
 
-int Dailyhub::Core::Utility::random(int min, int max) {
+int Dailyhub::Core::Utility::random(int32_t min, int32_t max) {
   std::random_device dev;
   std::mt19937 rng(dev());
   std::uniform_int_distribution<std::mt19937::result_type> dist6(min, max);
   return dist6(rng);
 }
 
-int Dailyhub::Core::Utility::random(int max) {
+int Dailyhub::Core::Utility::random(uint32_t max) {
   std::random_device dev;
   std::mt19937 rng(dev());
   std::uniform_int_distribution<std::mt19937::result_type> dist6(0, max);
@@ -24,34 +24,34 @@ int Dailyhub::Core::Utility::random(int max) {
 }
 
 std::string Dailyhub::Core::Utility::bytes_to_hex_string(const std::vector<unsigned char>& bytes) {
-    std::stringstream ss;
-    ss << std::hex << std::setfill('0');
-    for (unsigned char byte : bytes) {
-        ss << std::setw(2) << static_cast<int>(byte);
-    }
-    return ss.str();
+  std::stringstream ss;
+  ss << std::hex << std::setfill('0');
+  for (const unsigned char byte : bytes) {
+    ss << std::setw(2) << static_cast<int>(byte);
+  }
+  return ss.str();
 }
 
 std::string Dailyhub::Core::Utility::time_point_to_string(const std::chrono::system_clock::time_point& tp) {
-    std::time_t t = std::chrono::system_clock::to_time_t(tp);
-    std::tm tm = *std::gmtime(&t); // Ou std::localtime para o timezone local
-    std::stringstream ss;
-    ss << std::put_time(&tm, "%Y-%m-%dT%H:%M:%SZ"); // Formato ISO 8601
-    return ss.str();
+  std::time_t t = std::chrono::system_clock::to_time_t(tp);
+  std::tm tm = *std::gmtime(&t); // Ou std::localtime para o timezone local
+  std::stringstream ss;
+  ss << std::put_time(&tm, "%Y-%m-%dT%H:%M:%SZ"); // Formato ISO 8601
+  return ss.str();
 }
 
 std::chrono::system_clock::time_point Dailyhub::Core::Utility::parse_date_time(const std::string& time_str) {
-    std::chrono::system_clock::time_point tp;
-    std::stringstream ss(time_str);
-    date::from_stream(ss, "%Y-%m-%dT%H:%M:%SZ", tp);
-    if (ss.fail()) {
-        throw std::runtime_error("Falha ao analisar a data e hora");
-    }
-    return tp;
+  std::chrono::system_clock::time_point tp;
+  std::stringstream ss(time_str);
+  date::from_stream(ss, "%Y-%m-%dT%H:%M:%SZ", tp);
+  if (ss.fail()) {
+    throw std::runtime_error("Falha ao analisar a data e hora");
+  }
+  return tp;
 }
 
 std::string Dailyhub::Core::Utility::gerateString(const uint8_t lenght = 6) {
-  std::string caracters = "0123654789MNBVCXZLKJHGFDSAPOIUYTREWQ";
+  const std::string caracters{"0123654789MNBVCXZLKJHGFDSAPOIUYTREWQ"};
   std::string randomString;
   for (size_t i = 0; i <lenght; i++) {
     randomString += caracters[random(caracters.size())];
@@ -61,14 +61,14 @@ std::string Dailyhub::Core::Utility::gerateString(const uint8_t lenght = 6) {
 }
 
 const char* Dailyhub::Core::Utility::gerateStringC(const uint8_t lenght = 6) {
-    std::string caracters = "0123654789MNBVCXZLKJHGFDSAPOIUYTREWQ";
-    std::string randomString;
-    for (size_t i = 0; i <lenght; i++) {
-        randomString += caracters[random(caracters.size())];
-    }
+  const std::string caracters{"0123654789MNBVCXZLKJHGFDSAPOIUYTREWQ"};
+  std::string randomString;
+  for (size_t i = 0; i <lenght; i++) {
+    randomString += caracters[random(caracters.size())];
+  }
 
-    const char* c_str = randomString.c_str();
-    return c_str;
+  const char* c_str = randomString.c_str();
+  return c_str;
 }
 
 std::string Dailyhub::Core::Utility::gerateCode(int seed) {
@@ -78,14 +78,14 @@ std::string Dailyhub::Core::Utility::gerateCode(int seed) {
 }
 
 std::string Dailyhub::Core::Utility::base64_encode(const std::string& input) {
-  static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  const std::string base64_chars{"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"};
   std::string encoded;
-  int i = 0;
-  unsigned char char_array_3[3];
-  unsigned char char_array_4[4];
+  int32_t i = 0;
+  uint8_t char_array_3[3];
+  uint8_t char_array_4[4];
   size_t input_length = input.length();
 
-  for (size_t in_i = 0; in_i < input_length; ) {
+  for (size_t in_i = 0; in_i < input_length;) {
     char_array_3[0] = input[in_i++];
     char_array_3[1] = (in_i < input_length) ? input[in_i++] : 0;
     char_array_3[2] = (in_i < input_length) ? input[in_i++] : 0;
@@ -108,11 +108,11 @@ std::string Dailyhub::Core::Utility::base64_encode(const std::string& input) {
 }
 
 std::string Dailyhub::Core::Utility::base64_decode(const std::string& input) {
-  static const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+  const std::string base64_chars{"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"};
   std::string decoded;
-  int i = 0;
-  unsigned char char_array_3[3];
-  unsigned char char_array_4[4];
+  int32_t i = 0;
+  uint8_t char_array_3[3];
+  uint8_t char_array_4[4];
   size_t input_length = input.size();
 
   for (size_t in_i = 0; in_i < input_length;) {
@@ -150,7 +150,7 @@ bool Dailyhub::Core::Utility::IsValidEmail(const std::string& email) {
 }
 
 bool Dailyhub::Core::Utility::ContainsSymbols(const std::string& str) {
-  for (char c : str) {
+  for (const char c : str) {
     if (!isalnum(c)) {
       if (!isspace(c)) {
         return true;
@@ -159,10 +159,6 @@ bool Dailyhub::Core::Utility::ContainsSymbols(const std::string& str) {
   }
   return false;
 }
-
-// bool Dailyhub::Core::Utility::IsNumber(std::string& str) {
-//   return std::isalnum(str);
-// }
 
 std::string Dailyhub::Core::Utility::readFilesSQL(const std::string& sqlFile) {
   std::ifstream file(sqlFile, std::ios::in | std::ios::binary);
@@ -177,44 +173,44 @@ std::string Dailyhub::Core::Utility::readFilesSQL(const std::string& sqlFile) {
 }
 
 std::string Dailyhub::Core::Utility::replaceTemplates(std::string html, const std::unordered_map<std::string, std::string>& replacements) {
-    if (html.empty() || replacements.empty()) {
-        return "";
+  if (html.empty() || replacements.empty()) {
+    return "";
+  }
+
+  std::regex templateRegex{R"(\{\{\s*(\w+)\s*\}\})"};
+  std::string result;
+  std::sregex_iterator it{html.begin(), html.end(), templateRegex};
+  std::sregex_iterator end;
+  size_t lastMatchEnd = 0;
+
+  while (it != end) {
+    std::smatch match = *it;
+    size_t matchPos = match.position();
+    result += html.substr(lastMatchEnd, matchPos - lastMatchEnd); // Adiciona tudo que esta antes do template na string de resultado
+    std::string templateKey = match[1].str();  // Retira o nome do template (o que esta entre as chaves)
+
+    if (replacements.count(templateKey)) {
+      result += replacements.at(templateKey); // se o templateKey existir no unordered_map, adicione a string substituida
+    } else {
+      result += match.str(); //se o templateKey não existir no unordered_map, adicione o template original
     }
 
-    std::regex templateRegex{R"(\{\{\s*(\w+)\s*\}\})"};
-    std::string result;
-    std::sregex_iterator it{html.begin(), html.end(), templateRegex};
-    std::sregex_iterator end;
-    size_t lastMatchEnd = 0;
+    lastMatchEnd = matchPos + match.length(); // atualiza a posição do ultimo match
+    it++;
+  }
 
-    while (it != end) {
-        std::smatch match = *it;
-        size_t matchPos = match.position();
-        result += html.substr(lastMatchEnd, matchPos - lastMatchEnd); // Adiciona tudo que esta antes do template na string de resultado
-        std::string templateKey = match[1].str();  // Retira o nome do template (o que esta entre as chaves)
-
-        if (replacements.count(templateKey)) {
-            result += replacements.at(templateKey); // se o templateKey existir no unordered_map, adicione a string substituida
-        } else {
-            result += match.str(); //se o templateKey não existir no unordered_map, adicione o template original
-        }
-
-        lastMatchEnd = matchPos + match.length(); // atualiza a posição do ultimo match
-        it++;
-    }
-
-    result += html.substr(lastMatchEnd); // adicione o resto do html que sobrou da string original
-    return result;
+  result += html.substr(lastMatchEnd); // adicione o resto do html que sobrou da string original
+  return result;
 }
 
-std::string Dailyhub::Core::Utility::readHTML(const std::string& filename, const std::unordered_map<std::string, std::string>& replacements) {
-    std::ifstream file{std::string(filename + ".html"), std::ios::in | std::ios::binary};
-    if (!file.is_open()) {
-        std::cerr << "Erro ao abrir o arquivo: " << filename << std::endl;
-        return "";
-    }
+std::string Dailyhub::Core::Utility::readFile(const std::string& filename, const std::unordered_map<std::string, std::string>& replacements) {
+  std::ifstream file{std::string(filename), std::ios::in | std::ios::binary};
+  if (!file.is_open()) {
+    std::cerr << "Erro ao abrir o arquivo: " << filename << std::endl;
+    return "";
+  }
 
-    std::stringstream buffer;
-    buffer << file.rdbuf();
-    return Dailyhub::Core::Utility::replaceTemplates(buffer.str(), replacements);
+  std::stringstream buffer;
+  buffer << file.rdbuf();
+  return Dailyhub::Core::Utility::replaceTemplates(buffer.str(), replacements);
 }

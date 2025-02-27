@@ -29,10 +29,8 @@ crow::response registerUser(const crow::request& req) {
     return crow::response(401);
 }
 
-void Dailyhub::Core::Servidor::Routes() {
-  CROW_ROUTE(Servidor::app, "/isonline").methods(crow::HTTPMethod::GET)(isonline);
-  CROW_ROUTE(Servidor::app, "/api/login").methods(crow::HTTPMethod::POST)(loginUser);
-  CROW_ROUTE(Servidor::app, "/app/register").methods(crow::HTTPMethod::POST)(registerUser);
+void Dailyhub::Core::Servidor::Routes(std::function<void(crow::SimpleApp& app)>& func) {
+  func(Servidor::app);
 }
 
 void Dailyhub::Core::Servidor::start_server() {
@@ -44,8 +42,8 @@ void Dailyhub::Core::Servidor::start_server() {
   running = true;
 }
 
-void Dailyhub::Core::Servidor::Start() {
-  Servidor::Routes();
+void Dailyhub::Core::Servidor::Start(std::function<void(crow::SimpleApp& app)>& func) {
+  Servidor::Routes(func);
   server_worker = std::thread(start_server);
 }
 

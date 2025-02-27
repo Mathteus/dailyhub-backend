@@ -25,7 +25,7 @@ namespace Users {
     std::string name;
     std::string tag;
     std::string email;
-  } DTO_User_Login;
+  } DTO_USER_LOGIN;
 
   typedef struct {
     std::string hash;
@@ -49,15 +49,25 @@ namespace Users {
     std::string email;
   } User_Register_Email;
 
+  typedef struct {
+    std::string name;
+    std::string code;
+    std::string email;
+    std::string tag;
+    std::string password;
+    std::string messasge;
+  } DTO_USER_REGISTER;
+
   using Response_Register = struct Response<bool>;
-  using Response_UserLogin = struct Response<DTO_User_Login>;
+  using Response_UserLogin = struct Response<DTO_USER_LOGIN>;
   using Response_GetPassword = struct Response<DTO_GET_PASSWORD>;
   using Response_Update = struct Response<bool>;
   using Response_Delete = struct Response<bool>;
   using Response_UserData = struct Response<DTO_User>;
 
-  DTO_User_Login Parse_DTO_Login(const nlohmann::json& j);
+  DTO_USER_LOGIN Parse_DTO_Login(const nlohmann::json& j);
   DTO_User perseUser(const nlohmann::json& j);
+  DTO_USER_REGISTER Parse_DTO_User_Register(const nlohmann::json& j);
 };
 
 namespace Kanban {
