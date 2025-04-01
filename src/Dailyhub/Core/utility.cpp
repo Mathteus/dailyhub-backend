@@ -9,14 +9,14 @@ std::string Dailyhub::Core::Utility::String(int32_t num) {
   return std::to_string(num);
 }
 
-int Dailyhub::Core::Utility::random(int32_t min, int32_t max) {
+int32_t Dailyhub::Core::Utility::random(int32_t min, int32_t max) {
   std::random_device dev;
   std::mt19937 rng(dev());
   std::uniform_int_distribution<std::mt19937::result_type> dist6(min, max);
   return dist6(rng);
 }
 
-int Dailyhub::Core::Utility::random(uint32_t max) {
+int32_t Dailyhub::Core::Utility::random(uint32_t max) {
   std::random_device dev;
   std::mt19937 rng(dev());
   std::uniform_int_distribution<std::mt19937::result_type> dist6(0, max);
@@ -52,9 +52,10 @@ std::chrono::system_clock::time_point Dailyhub::Core::Utility::parse_date_time(c
 
 std::string Dailyhub::Core::Utility::gerateString(const uint8_t lenght = 6) {
   const std::string caracters{"0123654789MNBVCXZLKJHGFDSAPOIUYTREWQ"};
+  const uint32_t max = caracters.size();
   std::string randomString;
   for (size_t i = 0; i <lenght; i++) {
-    randomString += caracters[random(caracters.size())];
+    randomString += caracters[random(max)];
   }
 
   return randomString;
@@ -62,13 +63,13 @@ std::string Dailyhub::Core::Utility::gerateString(const uint8_t lenght = 6) {
 
 const char* Dailyhub::Core::Utility::gerateStringC(const uint8_t lenght = 6) {
   const std::string caracters{"0123654789MNBVCXZLKJHGFDSAPOIUYTREWQ"};
+  const uint32_t max = caracters.size();
   std::string randomString;
   for (size_t i = 0; i <lenght; i++) {
-    randomString += caracters[random(caracters.size())];
+    randomString += caracters[random(max)];
   }
 
-  const char* c_str = randomString.c_str();
-  return c_str;
+  return randomString.c_str();
 }
 
 std::string Dailyhub::Core::Utility::gerateCode(int seed) {

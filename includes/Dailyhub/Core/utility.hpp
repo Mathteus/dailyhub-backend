@@ -28,9 +28,9 @@ struct TimedData {
 
 namespace Utility {
   uint32_t Integer(std::string str);
-  std::string String(uint32_t num);
-  int random(int min, int max);
-  int random(int max);
+  std::string String(int32_t num);
+  int32_t random(int32_t min, int32_t max);
+  int32_t random(uint32_t max);
   std::string gerateString(const uint8_t lenght);
   const char* gerateStringC(const uint8_t lenght);
   std::string gerateCode(int seed);

@@ -7,8 +7,8 @@
 namespace Dailyhub {
 namespace Core {
 namespace DotEnv {
-    std::string get(const std::string& key, const char* placeholder);
-    void load(const char* path);
+  std::string get(const std::string& key, const char* placeholder);
+  void load(const char* path);
 };
 };
 };

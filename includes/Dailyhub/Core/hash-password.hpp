@@ -11,8 +11,8 @@
 namespace Dailyhub {
 namespace Core {
 namespace PasswordHasher {
-    Dailyhub::Core::Errors::ResponseString to_hash_pass(const std::string& password);
-    bool verify_password(const std::string& password, const std::string& stored_salt);
+  Dailyhub::Core::Errors::ResponseString to_hash_pass(const std::string& password);
+  bool verify_password(const std::string& password, const std::string& stored_salt);
 };
 };
 };

@@ -7,16 +7,22 @@
 namespace Dailyhub {
 namespace Core {
 namespace Errors {
-    template<typename TypeError> struct Response {
-        bool success;
-        std::optional<TypeError> data;
-        std::optional<std::string> error;
-    };
+  template<typename TypeError> struct Response {
+    bool success;
+    std::optional<TypeError> data;
+    std::optional<std::string> error;
+  };
 
-    using ResponseBoolean = struct Response<bool>;
-    using ResponseString = struct Response<std::string>;
-    using ResponseVoid = struct Response<void>;
-    using ResponseShort = struct Response<uint16_t>;
+  typedef struct {
+    bool success;
+    uint16_t code;
+    std::optional<std::string> message;
+  } ResponseServer;
+
+  using ResponseBoolean = struct Response<bool>;
+  using ResponseString = struct Response<std::string>;
+  using ResponseVoid = struct Response<void>;
+  using ResponseShort = struct Response<uint16_t>;
 };
 };
 };

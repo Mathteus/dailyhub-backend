@@ -1,31 +1,40 @@
 #include "Dailyhub/routes.hpp"
 #include <cstdlib>
+#include <crow.h>
 
-bool verifyKeyApi(const crow::request& apikey) {
-  return std::string(Dailyhub::Core::DotEnv::get("X_API_KEY", "ERROR")) == apikey.get_header_value("x-api-key");
+const uint16_t OK{200};
+const uint16_t UNAUTHORIZED{401};
+
+bool verifyFailFromKeyApi(const crow::request& apikey) {
+  const std::string API_KEY{Dailyhub::Core::DotEnv::get("X_API_KEY", "ERROR")};
+  return API_KEY != apikey.get_header_value("x-api-key");
 }
 
 crow::response isonline() {
-  return crow::response(200, "OK");
+  return crow::response(OK, "OK");
 }
 
 crow::response loginUser(const crow::request& req) {
-  if (verifyKeyApi(req)) {
-    return crow::response(200, "Login My APP");
+  if (verifyFailFromKeyApi(req)) {
+    return crow::response(UNAUTHORIZED);
   }
-  return crow::response(401);
+
+  return crow::response(OK, "Login My APP");
 }
 
 crow::response registerUser(const crow::request& req) {
-  if (verifyKeyApi(req)) {
-    const nlohmann::json register_user = Dailyhub::Application::Register(nlohmann::json::parse(req.body));
-    const uint16_t code = Dailyhub::Core::Utility::Integer(register_user["status"]);
-    return crow::response(code, register_user["message"]);
+  if (verifyFailFromKeyApi(req)) {
+    return crow::response(UNAUTHORIZED);
   }
-  return crow::response(401);
+
+  if (const auto register_user = Dailyhub::Application::Register(nlohmann::json::parse(req.body)); register_user.message) {
+    return crow::response(register_user.code, register_user.message->data());
+  } else {
+    return crow::response(register_user.code);
+  }
 }
 
-void Dailyhub::Routes::Configure(const crow::SimpleApp& server_application) const {
+void Dailyhub::Routes::Configure(crow::SimpleApp& server_application) {
   CROW_ROUTE(server_application, "/isonline").methods(crow::HTTPMethod::GET)(isonline);
   CROW_ROUTE(server_application, "/api/v1/login").methods(crow::HTTPMethod::POST)(loginUser);
   CROW_ROUTE(server_application, "/api/v1/register").methods(crow::HTTPMethod::POST)(registerUser);

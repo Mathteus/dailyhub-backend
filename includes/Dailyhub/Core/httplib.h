@@ -8190,8 +8190,7 @@ inline Result ClientImpl::Get(const std::string &path, const Headers &headers) {
   return Get(path, headers, Progress());
 }
 
-inline Result ClientImpl::Get(const std::string &path, const Headers &headers,
-                              Progress progress) {
+inline Result ClientImpl::Get(const std::string &path, const Headers &headers, Progress progress) {
   Request req;
   req.method = "GET";
   req.path = path;

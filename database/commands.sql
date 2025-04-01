@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS users (
   CONSTRAINT pk_userid PRIMARY KEY (user_id)
 );
 
-CREATE INDEX idx_users_name ON users (name)
+CREATE INDEX idx_users_name ON users (name);
 CREATE INDEX idx_users_last_login ON users (last_login);
 
 INSERT INTO users (hash, salt, name, tag, email) VALUES ('hash', 'salt', 'name', 'tag', 'email');
@@ -43,7 +43,6 @@ CREATE TABLE IF NOT EXISTS finance (
   name VARCHAR(26) NOT NULL,
   description TEXT NOT NULL,
   amount DECIMAL(10, 2) NOT NULL,
-  date_
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   CONSTRAINT pk_transactionid PRIMARY KEY (transactionid),
   CONSTRAINT fk_userid FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
@@ -63,6 +62,17 @@ CREATE TABLE IF NOT EXISTS kanban (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   last_update TIMESTAMPTZ NOT NULL DEFAULT now(),
   CONSTRAINT pk_taskid PRIMARY KEY (taskid),
+  CONSTRAINT fk_userid FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS note (
+  noteid varchar(8) NOT NULL DEFAULT nanoid(8),
+  user_id VARCHAR(6) NOT NULL,
+  title VARCHAR(20) NOT NULL,
+  texto TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  last_update TIMESTAMPTZ NOT NULL DEFAULT now(),
+  CONSTRAINT pk_noteid PRIMARY KEY (noteid),
   CONSTRAINT fk_userid FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 

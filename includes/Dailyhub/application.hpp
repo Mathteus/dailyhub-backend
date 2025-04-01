@@ -28,12 +28,14 @@
 namespace Dailyhub {
 class Application {
 public:
-    Application();
-    ~Application();
+  Application();
+  ~Application();
 
-    static nlohmann::json Login(std::string user, std::string password);
-    static nlohmann::json Register(nlohmann::json user);
-    static void Send_Email(const Dailyhub::Schemas::Users::User_Register_Email& user_json);
+  using ResturnApplication = Dailyhub::Core::Errors::ResponseServer;
+
+  static ResturnApplication Login(std::string user, std::string password);
+  static ResturnApplication Register(nlohmann::json user);
+  static void Send_Email(const Dailyhub::Schemas::Users::User_Register_Email& user_json);
 };
 };
 

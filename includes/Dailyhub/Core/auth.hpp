@@ -14,8 +14,8 @@
 namespace Dailyhub {
 namespace Core {
 namespace AuthManager {
-    std::string generateJWT(const std::string& username);
-    Dailyhub::Core::Errors::ResponseString verifyJWT(const std::string& token);
+  std::string generateJWT(const std::string& username);
+  Dailyhub::Core::Errors::ResponseString verifyJWT(const std::string& token);
 };
 };
 };

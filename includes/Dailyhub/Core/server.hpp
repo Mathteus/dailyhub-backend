@@ -20,8 +20,8 @@ public:
   Servidor() = default;
   ~Servidor() = default;
 
-  static void Start(std::function<void(crow::SimpleApp& app)>& func);
-  static void Stop();
+  static bool Start(std::function<void(crow::SimpleApp& app)>& func);
+  static bool Stop();
 };
 };
 };

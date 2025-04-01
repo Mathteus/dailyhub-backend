@@ -5,7 +5,7 @@
 
 namespace Dailyhub {
 namespace Routes {
-  void Configure(crow::SimpleApp& server_application) const;
+  void Configure(crow::SimpleApp& server_application);
 };
 };
 
